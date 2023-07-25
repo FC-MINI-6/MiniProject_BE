@@ -32,6 +32,10 @@ public class CustomUserDetails implements UserDetails {
         return user.getUsername();
     }
 
+    public boolean isAdmin() {
+        return user.getRoles().equals("admin"); //enum으로 수정 시 수정해야함
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
