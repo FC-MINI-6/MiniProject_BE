@@ -29,7 +29,15 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
+    }
+
+    public Long getUserId() {
+        return user.getId();
+    }
+
+    public boolean isAdmin() {
+        return user.getRoles().equals("admin"); //enum으로 수정 시 수정해야함
     }
 
     @Override

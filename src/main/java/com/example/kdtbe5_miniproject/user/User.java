@@ -1,27 +1,31 @@
 package com.example.kdtbe5_miniproject.user;
 
+import com.example.kdtbe5_miniproject._core.util.BaseTimeEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Getter
-public class User {
+@Table(name = "user_tb")
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
-    private String roles;
     private String username;
     private String password;
+    private String email;
+    private String phoneNumber;
+    private String position;    //직급
+    private String roles;       //관리자, 사용자
+    private Long numOfDayOff;
+    private LocalDateTime joinDate;
 
 }

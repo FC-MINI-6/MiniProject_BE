@@ -7,20 +7,21 @@ import org.springframework.http.HttpStatus;
 
 // 공통 응답 DTO
 public class ApiUtils {
-    public static <T> ApiResult<T> success(T response) {
-        return new ApiResult<>(true, response, null);
+    public static <T> ApiResult<T> success(T data, HttpStatus status) {
+        return new ApiResult<>(status.value(), true, data, null);
     }
 
     public static ApiResult<?> error(String message, HttpStatus status) {
-        return new ApiResult<>(false, null, new ApiError(message, status.value()));
+        return new ApiResult<>(status.value(), false, null, new ApiError(message, status.value()));
     }
 
     @Getter
     @Setter
     @AllArgsConstructor
     public static class ApiResult<T> {
+        private int code;
         private final boolean success;
-        private final T response;
+        private final T data;
         private final ApiError error;
     }
 
