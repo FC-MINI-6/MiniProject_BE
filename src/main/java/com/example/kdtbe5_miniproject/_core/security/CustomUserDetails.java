@@ -29,7 +29,11 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return user.getEmail();
+    }
+
+    public Long getUserId() {
+        return user.getId();
     }
 
     public boolean isAdmin() {
