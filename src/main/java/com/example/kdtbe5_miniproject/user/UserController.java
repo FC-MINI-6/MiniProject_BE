@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -43,20 +45,29 @@ public class UserController {
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO loginDTO, Errors errors, HttpServletRequest request) {
         try {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                    = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+                    = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            log.info(EncryptUtils.decrypt(myUserDetails.getUsername()) + " Login");
 
             String jwt = JwtTokenProvider.create(myUserDetails.getUser());
             addLoginHistory(request, myUserDetails);
 
-            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null, HttpStatus.OK));
+            Map<String, Object> response = new HashMap<>();
+            response.put("accessToken", jwt);
+
+            User user = myUserDetails.getUser();
+            UserResponse.JoinDTO userResponse = new UserResponse.JoinDTO(user);
+
+            response.put("user", userResponse);
+
+            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(response, HttpStatus.OK));
 
         } catch (Exception e) {
             throw new Exception401("인증되지 않았습니다");
         }
     }
+
+
 
     private void addLoginHistory(HttpServletRequest request, CustomUserDetails myUserDetails) {
         LoginHistoryRequest.LoginHistoryDTO loginHistoryDTO = new LoginHistoryRequest.LoginHistoryDTO();
