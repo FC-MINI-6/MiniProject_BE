@@ -36,22 +36,21 @@ public class UserController {
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO joinDTO, Errors errors) {
         UserResponse.JoinDTO responseDTO = userService.joinUser(joinDTO);
         log.info(joinDTO.getUsername() + " Joined");
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO, HttpStatus.OK));
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO loginDTO, Errors errors, HttpServletRequest request) {
         try {
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                    = new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword());
+                    = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
             Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
             CustomUserDetails myUserDetails = (CustomUserDetails) authentication.getPrincipal();
-            log.info(EncryptUtils.decrypt(myUserDetails.getUsername()) + " Login");
 
             String jwt = JwtTokenProvider.create(myUserDetails.getUser());
             addLoginHistory(request, myUserDetails);
 
-            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null, HttpStatus.OK));
+            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null));
 
         } catch (Exception e) {
             throw new Exception401("인증되지 않았습니다");

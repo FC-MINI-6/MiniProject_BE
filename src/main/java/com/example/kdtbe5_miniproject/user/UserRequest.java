@@ -13,7 +13,7 @@ public class UserRequest {
     @Setter
     public static class LoginDTO {
         @NotEmpty
-        private String username;
+        private String email;
         @NotEmpty
         @Size(min = 4, max = 20)
         private String password;
