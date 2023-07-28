@@ -17,8 +17,8 @@ public class Exception400 extends RuntimeException {
         this.value = value;
     }
 
-    public ApiUtils.ApiResult<?> body() {
-        return ApiUtils.error(getMessage(), HttpStatus.BAD_REQUEST);
+    public ApiUtils.ApiMessageResult<?> body() {
+        return ApiUtils.error(getMessage());
     }
 
     public HttpStatus status() {
