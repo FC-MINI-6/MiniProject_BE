@@ -27,4 +27,8 @@ public class User extends BaseTimeEntity {
     private String roles;       //관리자, 사용자
     private LocalDate joinDate;
 
+    public void updatePhoneNumber(String newPhoneNum) {
+        this.phoneNumber = newPhoneNum;
+    }
+
 }
