@@ -4,18 +4,17 @@ import com.example.kdtbe5_miniproject._core.errors.exception.Exception401;
 import com.example.kdtbe5_miniproject._core.security.CustomUserDetails;
 import com.example.kdtbe5_miniproject._core.security.JwtTokenProvider;
 import com.example.kdtbe5_miniproject._core.util.ApiUtils;
-import com.example.kdtbe5_miniproject._core.util.EncryptUtils;
 import com.example.kdtbe5_miniproject.login_history.LoginHistoryRequest;
 import com.example.kdtbe5_miniproject.login_history.LoginHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -66,5 +65,11 @@ public class UserController {
         loginHistoryDTO.setLoginAt(LocalDateTime.now());
 
         loginHistoryService.save(loginHistoryDTO);
+    }
+
+    @PutMapping("/mypage/updatePassword")
+    public ResponseEntity<?> userPasswordModify(@RequestBody UserRequest.ModifyPwdDTO request) {
+        userService.updatePwd(request);
+        return ResponseEntity.ok().body(ApiUtils.success("변경되었습니다."));
     }
 }

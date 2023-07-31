@@ -47,4 +47,12 @@ public class UserRequest {
                     .build();
         }
     }
+
+    @Getter
+    @Setter
+    public static class ModifyPwdDTO {
+        private Long userId;
+        private String oldPassword;
+        private String newPassword;
+    }
 }
