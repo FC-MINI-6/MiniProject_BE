@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @AllArgsConstructor
@@ -25,7 +25,6 @@ public class User extends BaseTimeEntity {
     private String phoneNumber;
     private String position;    //직급
     private String roles;       //관리자, 사용자
-    private Long numOfDayOff;
-    private LocalDateTime joinDate;
+    private LocalDate joinDate;
 
 }
