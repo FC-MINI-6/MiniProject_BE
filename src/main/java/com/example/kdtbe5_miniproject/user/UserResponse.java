@@ -3,7 +3,7 @@ package com.example.kdtbe5_miniproject.user;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class UserResponse {
 
@@ -17,7 +17,7 @@ public class UserResponse {
         private String position;
         private String roles;
         private Long numOfDayOff;
-        private LocalDateTime joinDate;
+        private LocalDate joinDate;
 
         public JoinDTO(User user) {
             this.id = user.getId();
@@ -26,7 +26,6 @@ public class UserResponse {
             this.phoneNumber = user.getPhoneNumber();
             this.position = user.getPosition();
             this.roles = user.getRoles();
-            this.numOfDayOff = user.getNumOfDayOff();
             this.joinDate = user.getJoinDate();
         }
     }
