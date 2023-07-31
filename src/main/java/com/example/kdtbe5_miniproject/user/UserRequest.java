@@ -6,7 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class UserRequest {
     @Getter
@@ -33,7 +33,7 @@ public class UserRequest {
         private String phoneNumber;
         private String position;
         private Long numOfDayOff;
-        private LocalDateTime joinDate;
+        private LocalDate joinDate;
 
         public User toEntity() {
             return User.builder()
@@ -42,7 +42,6 @@ public class UserRequest {
                     .email(email)
                     .phoneNumber(phoneNumber)
                     .position(position)
-                    .numOfDayOff(numOfDayOff)
                     .roles("USER")
                     .joinDate(joinDate)
                     .build();

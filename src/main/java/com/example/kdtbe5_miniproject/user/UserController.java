@@ -36,7 +36,7 @@ public class UserController {
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO joinDTO, Errors errors) {
         UserResponse.JoinDTO responseDTO = userService.joinUser(joinDTO);
         log.info(joinDTO.getUsername() + " Joined");
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO, HttpStatus.OK));
+        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
     }
 
     @PostMapping("/login")
@@ -50,7 +50,7 @@ public class UserController {
             String jwt = JwtTokenProvider.create(myUserDetails.getUser());
             addLoginHistory(request, myUserDetails);
 
-            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null, HttpStatus.OK));
+            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null));
 
         } catch (Exception e) {
             throw new Exception401("인증되지 않았습니다");
