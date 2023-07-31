@@ -1,6 +1,6 @@
 package com.example.kdtbe5_miniproject.user;
 
-import com.example.kdtbe5_miniproject._core.util.EncryptUtils;
+import com.example.kdtbe5_miniproject._core.errors.exception.UnCorrectPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,5 +24,16 @@ public class UserService {
 
         User userPS = userRepository.save(joinDTO.toEntity());
         return new UserResponse.JoinDTO(userPS);
+    }
+
+    @Transactional
+    public void updatePwd(UserRequest.ModifyPwdDTO request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new NullPointerException("사용자를 찾을 수 없습니다."));
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new UnCorrectPasswordException("비밀번호가 일치하지 않습니다.");
+        }
+        userRepository.updateById(passwordEncoder.encode(request.getNewPassword()), request.getUserId());
     }
 }
