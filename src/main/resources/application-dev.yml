@@ -22,6 +22,12 @@ spring:
         format_sql: true
       default_batch_fetch_size: 100
     open-in-view: false
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath*:db/data.sql
+      mode: always
+      platform: h2
 
 logging:
   level:
