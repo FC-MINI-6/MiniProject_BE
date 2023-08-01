@@ -12,11 +12,8 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-public class BaseTimeEntity {
-
-    @CreatedDate
-    private LocalDateTime createdAt;
+public class BaseTimeEntity extends DateUtils{
 
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private LocalDateTime updateDate; //TODO 초가 소수점 단위로 생성되어서 저장됨, 소수점 이하 버리기
 }
