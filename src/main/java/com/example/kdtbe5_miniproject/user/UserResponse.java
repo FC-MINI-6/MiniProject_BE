@@ -16,7 +16,7 @@ public class UserResponse {
         private String phoneNumber;
         private String position;
         private String roles;
-        private Long numOfDayOff;
+        private Float numOfDayOff;
         private LocalDate joinDate;
 
         public JoinDTO(User user) {

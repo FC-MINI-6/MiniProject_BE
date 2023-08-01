@@ -33,7 +33,7 @@ public class UserRequest {
         @Pattern(regexp = "^01(?:0|1|[6-9])\\d{7,8}$", message = "01011112222와 같은 형식으로 작성해주세요")
         private String phoneNumber;
         private String position;
-        private Long numOfDayOff;
+        private Float numOfDayOff;
         private LocalDate joinDate;
 
         public User toEntity() {
