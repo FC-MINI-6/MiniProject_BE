@@ -30,9 +30,10 @@ public class UserRequest {
         @NotEmpty
         @Pattern(regexp = "^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$", message = "이메일 형식으로 작성해주세요")
         private String email;
+        @Pattern(regexp = "^01(?:0|1|[6-9])\\d{7,8}$", message = "01011112222와 같은 형식으로 작성해주세요")
         private String phoneNumber;
         private String position;
-        private Long numOfDayOff;
+        private Float numOfDayOff;
         private LocalDate joinDate;
 
         public User toEntity() {
@@ -49,6 +50,14 @@ public class UserRequest {
     }
 
     @Getter
+
+    public static class UpdateDTO {
+
+        @NotEmpty
+        @Pattern(regexp = "^01(?:0|1|[6-9])\\d{7,8}$", message = "01011112222와 같은 형식으로 작성해주세요")
+        private String phoneNumber;
+    }
+  
     @Setter
     public static class ModifyPwdDTO {
         private Long userId;

@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
@@ -67,9 +69,18 @@ public class UserController {
         loginHistoryService.save(loginHistoryDTO);
     }
 
+
+    @PutMapping("/mypage/updatePhoneNumber")
+    private ResponseEntity<?> updatePhoneNumber(@AuthenticationPrincipal User updateUser, @RequestBody @Valid UserRequest.UpdateDTO updateDTO, Errors errors) {
+        userService.updatePhoneNumber(updateUser, updateDTO);
+        return ResponseEntity.ok().body(ApiUtils.success("전화번호가 변경되었습니다."));
+    }
+
+
     @PutMapping("/mypage/updatePassword")
     public ResponseEntity<?> userPasswordModify(@RequestBody UserRequest.ModifyPwdDTO request) {
         userService.updatePwd(request);
         return ResponseEntity.ok().body(ApiUtils.success("변경되었습니다."));
     }
+
 }

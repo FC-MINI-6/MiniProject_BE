@@ -3,9 +3,13 @@ package com.example.kdtbe5_miniproject.user;
 import com.example.kdtbe5_miniproject._core.errors.exception.UnCorrectPasswordException;
 import com.example.kdtbe5_miniproject._core.errors.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.Principal;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +32,12 @@ public class UserService {
     }
 
     @Transactional
+    public void updatePhoneNumber(User updateUser, UserRequest.UpdateDTO updateDTO) {
+        Optional<User> userOP = userRepository.findByEmail(updateUser.getEmail());
+        User user = userOP.get();
+        user.updatePhoneNumber(updateDTO.getPhoneNumber());
+    }
+
     public void updatePwd(UserRequest.ModifyPwdDTO request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));

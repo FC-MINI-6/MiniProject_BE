@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.function.LongConsumer;
 
 @Entity
 @AllArgsConstructor
@@ -23,8 +24,12 @@ public class User extends BaseTimeEntity {
     private String password;
     private String email;
     private String phoneNumber;
-    private String position;    //직급
-    private String roles;       //관리자, 사용자
+    private String position;    //TODO 직급 enum 타입으로 변경
+    private String roles;       //TODO 권한 enum 타입으로 변경
     private LocalDate joinDate;
+
+    public void updatePhoneNumber(String newPhoneNum) {
+        this.phoneNumber = newPhoneNum;
+    }
 
 }
