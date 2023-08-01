@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
@@ -17,9 +18,13 @@ public class CustomUserDetails implements UserDetails {
 
     private final User user;
 
+    //TODO : UserRoles를 Enum으로 변경하면서 오류가 생겨 getAuthorities(), isAdmin() 메서드 내용 수정했는데 확인 필요할 것 같아요
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+        Collection<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(()-> "ROLE_"+user.getRoles().getTypeNumber());
+        return authorities;
+//        return Arrays.stream(user.getRoles().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
@@ -37,7 +42,9 @@ public class CustomUserDetails implements UserDetails {
     }
 
     public boolean isAdmin() {
-        return user.getRoles().equals("admin"); //enum으로 수정 시 수정해야함
+        if(user.getRoles().getTypeNumber()==1)
+            return true;
+        return false;
     }
 
     @Override
