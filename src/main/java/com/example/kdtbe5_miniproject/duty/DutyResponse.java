@@ -12,7 +12,7 @@ public class DutyResponse {
         private Long id;
         private LocalDate date;
         private String reason;
-        private String status;
+        private DutyStatus status;
 
         public DutyDTO(Duty duty) {
             this.id = duty.getId();

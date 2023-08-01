@@ -25,5 +25,5 @@ public class Duty {
 
     private LocalDate date;
     private String reason;
-    private String status;  //TODO enum 타입으로 변경 (대기, 승인, 반려)
+    private DutyStatus status;  //대기(0), 승인(1), 반려(2)
 }
