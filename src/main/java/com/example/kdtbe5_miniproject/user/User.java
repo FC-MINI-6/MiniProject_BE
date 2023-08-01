@@ -24,8 +24,8 @@ public class User extends BaseTimeEntity {
     private String password;
     private String email;
     private String phoneNumber;
-    private String position;    //TODO 직급 enum 타입으로 변경
-    private String roles;       //TODO 권한 enum 타입으로 변경
+    private UserPosition position;    //사원(0), 대리(1), 과장(2), 차장(3), 부장(4)
+    private UserRoles roles;       //일반(0), 관리자(1)
     private LocalDate joinDate;
 
     public void updatePhoneNumber(String newPhoneNum) {

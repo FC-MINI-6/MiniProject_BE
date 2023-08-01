@@ -32,7 +32,7 @@ public class UserRequest {
         private String email;
         @Pattern(regexp = "^01(?:0|1|[6-9])\\d{7,8}$", message = "01011112222와 같은 형식으로 작성해주세요")
         private String phoneNumber;
-        private String position;
+        private UserPosition position;
         private Float numOfDayOff;
         private LocalDate joinDate;
 
@@ -43,7 +43,7 @@ public class UserRequest {
                     .email(email)
                     .phoneNumber(phoneNumber)
                     .position(position)
-                    .roles("USER")
+                    .roles(UserRoles.valueOf("일반"))
                     .joinDate(joinDate)
                     .build();
         }

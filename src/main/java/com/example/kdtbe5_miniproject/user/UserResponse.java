@@ -14,8 +14,8 @@ public class UserResponse {
         private String email;
         private String username;
         private String phoneNumber;
-        private String position;
-        private String roles;
+        private UserPosition position;
+        private UserRoles roles;
         private Float numOfDayOff;
         private LocalDate joinDate;
 
