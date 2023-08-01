@@ -1,6 +1,7 @@
 package com.example.kdtbe5_miniproject.user;
 
-import com.example.kdtbe5_miniproject._core.util.EncryptUtils;
+import com.example.kdtbe5_miniproject._core.errors.exception.UnCorrectPasswordException;
+import com.example.kdtbe5_miniproject._core.errors.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,4 +38,13 @@ public class UserService {
         user.updatePhoneNumber(updateDTO.getPhoneNumber());
     }
 
+    public void updatePwd(UserRequest.ModifyPwdDTO request) {
+        User user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new UnCorrectPasswordException("비밀번호가 일치하지 않습니다.");
+        }
+        userRepository.updateById(passwordEncoder.encode(request.getNewPassword()), request.getUserId());
+    }
 }

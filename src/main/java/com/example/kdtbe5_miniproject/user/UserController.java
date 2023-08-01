@@ -4,12 +4,10 @@ import com.example.kdtbe5_miniproject._core.errors.exception.Exception401;
 import com.example.kdtbe5_miniproject._core.security.CustomUserDetails;
 import com.example.kdtbe5_miniproject._core.security.JwtTokenProvider;
 import com.example.kdtbe5_miniproject._core.util.ApiUtils;
-import com.example.kdtbe5_miniproject._core.util.EncryptUtils;
 import com.example.kdtbe5_miniproject.login_history.LoginHistoryRequest;
 import com.example.kdtbe5_miniproject.login_history.LoginHistoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -71,10 +69,18 @@ public class UserController {
         loginHistoryService.save(loginHistoryDTO);
     }
 
+
     @PutMapping("/mypage/updatePhoneNumber")
     private ResponseEntity<?> updatePhoneNumber(@AuthenticationPrincipal User updateUser, @RequestBody @Valid UserRequest.UpdateDTO updateDTO, Errors errors) {
         userService.updatePhoneNumber(updateUser, updateDTO);
         return ResponseEntity.ok().body(ApiUtils.success("전화번호가 변경되었습니다."));
+    }
+
+
+    @PutMapping("/mypage/updatePassword")
+    public ResponseEntity<?> userPasswordModify(@RequestBody UserRequest.ModifyPwdDTO request) {
+        userService.updatePwd(request);
+        return ResponseEntity.ok().body(ApiUtils.success("변경되었습니다."));
     }
 
 }

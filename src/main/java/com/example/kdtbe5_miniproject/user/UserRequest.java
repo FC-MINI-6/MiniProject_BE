@@ -50,10 +50,18 @@ public class UserRequest {
     }
 
     @Getter
+
     public static class UpdateDTO {
 
         @NotEmpty
         @Pattern(regexp = "^01(?:0|1|[6-9])\\d{7,8}$", message = "01011112222와 같은 형식으로 작성해주세요")
         private String phoneNumber;
+    }
+  
+    @Setter
+    public static class ModifyPwdDTO {
+        private Long userId;
+        private String oldPassword;
+        private String newPassword;
     }
 }
