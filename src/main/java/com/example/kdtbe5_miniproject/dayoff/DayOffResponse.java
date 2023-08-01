@@ -23,11 +23,11 @@ public class DayOffResponse {
     @Getter
     public static class AppliedDayOffDTO {
         private Long id;
-        private String type;
+        private DayOffType type;
         private LocalDate startDate;
         private LocalDate endDate;
         private String reason;
-        private String status;
+        private DayOffStatus status;
 
         public AppliedDayOffDTO(DayOff dayOff) {
             this.id = dayOff.getId();

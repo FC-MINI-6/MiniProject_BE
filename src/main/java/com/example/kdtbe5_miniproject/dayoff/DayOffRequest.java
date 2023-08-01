@@ -15,7 +15,7 @@ public class DayOffRequest {
     @Setter
     public static class RegisterDTO {
         @NotNull
-        private String type;
+        private DayOffType type;
         @NotNull
         private LocalDate startDate;
         @NotNull

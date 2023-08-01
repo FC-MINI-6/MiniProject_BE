@@ -1,6 +1,8 @@
 package com.example.kdtbe5_miniproject.admin;
 
 import com.example.kdtbe5_miniproject.dayoff.DayOff;
+import com.example.kdtbe5_miniproject.dayoff.DayOffStatus;
+import com.example.kdtbe5_miniproject.dayoff.DayOffType;
 import com.example.kdtbe5_miniproject.duty.Duty;
 import com.example.kdtbe5_miniproject.user.User;
 import lombok.Getter;
@@ -19,8 +21,8 @@ public class AdminResponse {
         private LocalDate startDate;
         private LocalDate endDate;
         private String reason;
-        private String type;
-        private String status;
+        private DayOffType type;
+        private DayOffStatus status;
 
         public DayOffStatusDTO(DayOff dayOff) {
             this.id = dayOff.getId();
