@@ -71,8 +71,8 @@ public class UserController {
 
 
     @PutMapping("/mypage/updatePhoneNumber")
-    private ResponseEntity<?> updatePhoneNumber(@AuthenticationPrincipal User updateUser, @RequestBody @Valid UserRequest.UpdateDTO updateDTO, Errors errors) {
-        userService.updatePhoneNumber(updateUser, updateDTO);
+    public ResponseEntity<?> updatePhoneNumber(@AuthenticationPrincipal CustomUserDetails updateUser, @RequestBody @Valid UserRequest.UpdateDTO updateDTO) {
+        userService.updatePhoneNumber(updateUser.getUserId(), updateDTO);
         return ResponseEntity.ok().body(ApiUtils.success("전화번호가 변경되었습니다."));
     }
 

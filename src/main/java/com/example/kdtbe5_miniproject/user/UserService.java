@@ -32,10 +32,10 @@ public class UserService {
     }
 
     @Transactional
-    public void updatePhoneNumber(User updateUser, UserRequest.UpdateDTO updateDTO) {
-        Optional<User> userOP = userRepository.findByEmail(updateUser.getEmail());
-        User user = userOP.get();
+    public void updatePhoneNumber(Long userId, UserRequest.UpdateDTO updateDTO) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자 정보가 없습니다."));
         user.updatePhoneNumber(updateDTO.getPhoneNumber());
+        userRepository.save(user);
     }
 
     @Transactional

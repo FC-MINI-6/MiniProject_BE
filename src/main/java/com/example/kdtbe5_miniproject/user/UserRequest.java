@@ -48,7 +48,6 @@ public class UserRequest {
                     .build();
         }
     }
-
     @Getter
     public static class UpdateDTO {
         @NotEmpty
