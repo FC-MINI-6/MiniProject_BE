@@ -27,7 +27,7 @@ public class DutyController {
     }
 
     // 내 당직 리스트
-    @GetMapping("/duty/applied")
+    @GetMapping("/dutyList")
     public ResponseEntity<?> getAppliedDuty(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         User user = customUserDetails.getUser();
         List<DutyResponse.DutyDTO> appliedDuties = dutyService.getAppliedDuties(user.getId());
