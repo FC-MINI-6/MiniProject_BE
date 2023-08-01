@@ -29,6 +29,7 @@ public class DayOffRequest {
                     .startDate(this.startDate)
                     .endDate(this.endDate)
                     .reason(this.reason)
+                    .status(DayOffStatus.valueOf("대기"))
                     .user(user)
                     .build();
         }
