@@ -37,7 +37,7 @@ public class UserService {
         User user = userOP.get();
         user.updatePhoneNumber(updateDTO.getPhoneNumber());
     }
-
+    @Transactional
     public void updatePwd(UserRequest.ModifyPwdDTO request) {
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));

@@ -58,6 +58,7 @@ public class UserRequest {
         private String phoneNumber;
     }
   
+    @Getter
     @Setter
     public static class ModifyPwdDTO {
         private Long userId;
