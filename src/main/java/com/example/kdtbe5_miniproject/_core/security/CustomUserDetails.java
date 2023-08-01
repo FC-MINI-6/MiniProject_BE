@@ -37,6 +37,7 @@ public class CustomUserDetails implements UserDetails {
         return user.getEmail();
     }
 
+    //TODO 변경 확인
     public Long getUserId() {
         return user.getId();
     }

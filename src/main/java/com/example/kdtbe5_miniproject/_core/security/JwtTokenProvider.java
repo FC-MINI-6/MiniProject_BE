@@ -18,13 +18,15 @@ public class JwtTokenProvider {
     public static final String HEADER = "Authorization";
     public static final String SECRET = "MySecretKey";
 
+    // TODO 변경확인
     public static String create(User user) {
         // 토큰에는 데이터를 담을 수 있다. 민감한 정보는 추가하면 절대 안된다.
         String jwt = JWT.create()
                 .withSubject(user.getEmail())
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXP))
                 .withClaim("id", user.getId())
-                .withClaim("role", user.getRoles())
+                .withClaim("role", user.getRoles().name())
+//                .withClaim("role", user.getRoles())
                 .sign(Algorithm.HMAC512(SECRET));
         return TOKEN_PREFIX + jwt;
     }
