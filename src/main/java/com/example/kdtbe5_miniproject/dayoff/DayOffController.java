@@ -25,6 +25,7 @@ public class DayOffController {
         return ResponseEntity.ok().body(ApiUtils.success("등록이 완료되었습니다."));
     }
 
+    // 나의 연차 개수
     @GetMapping("/dayoff/my")
     public ResponseEntity<?> myDayOffInfo(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
         User user = customUserDetails.getUser();
