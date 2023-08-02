@@ -20,7 +20,9 @@ public class DayOffService {
     @Transactional
     public void registerDayOff(Long userId, DayOffRequest.RegisterDTO registerDTO) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
-        DayOff dayOff = registerDTO.toEntity(user);
+
+        float numOfDayOff = determineInitialDayOff(user);
+        DayOff dayOff = registerDTO.toEntity(user, numOfDayOff);
 
         dayOffRepository.save(dayOff);
     }
