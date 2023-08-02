@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum DayOffStatus {
     대기(0),
     승인(1),
-    반려(2);
+    반려(2),
+    취소(3);
 
     private final int typeNumber;
 }
