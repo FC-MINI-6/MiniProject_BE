@@ -26,7 +26,7 @@ public class DayOff {
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason;
-    private String type;    //TODO enum 타입으로 변경 (연자, 오전반차, 오후반차)
-    private String status;  //TODO enum 타입으로 변경 (대기, 승인, 반려)
+    private DayOffType type;    //연차(0), 오전반차(1), 오후반차(2)
+    private DayOffStatus status;  //대기(0), 승인(1), 반려(2)
     private Float numOfDayOff;
 }

@@ -15,7 +15,7 @@ public class DayOffRequest {
     @Setter
     public static class RegisterDTO {
         @NotNull
-        private String type;
+        private DayOffType type;
         @NotNull
         private LocalDate startDate;
         @NotNull
@@ -29,6 +29,7 @@ public class DayOffRequest {
                     .startDate(this.startDate)
                     .endDate(this.endDate)
                     .reason(this.reason)
+                    .status(DayOffStatus.valueOf("대기"))
                     .user(user)
                     .build();
         }

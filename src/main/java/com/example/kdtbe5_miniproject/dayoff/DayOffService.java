@@ -15,6 +15,7 @@ public class DayOffService {
     private final DayOffRepository dayOffRepository;
     private final UserRepository userRepository;
 
+    // 연차 신청
     @Transactional
     public void registerDayOff(Long userId, DayOffRequest.RegisterDTO registerDTO) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
@@ -29,6 +30,7 @@ public class DayOffService {
         return new DayOffResponse.MyDayOffDTO(15, 0, 5);
     }
 
+    // 내 연차 리스트
     @Transactional(readOnly = true)
     public DayOffResponse.AppliedDayOffDTO[] myAppliedDayOffs(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
@@ -36,6 +38,7 @@ public class DayOffService {
         return dayOffs.stream().map(DayOffResponse.AppliedDayOffDTO::new).toArray(DayOffResponse.AppliedDayOffDTO[]::new);
     }
 
+    // 연차 신청 취소
     @Transactional
     public void cancelDayOff(Long dayoffId, Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));

@@ -1,5 +1,6 @@
 package com.example.kdtbe5_miniproject.duty;
 
+import com.example.kdtbe5_miniproject.user.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +16,14 @@ public class DutyRequest {
         private LocalDate date;
         @NotEmpty
         private String reason;
+
+        public Duty toEntity(User user) {
+            return Duty.builder()
+                    .date(this.date)
+                    .reason(this.reason)
+                    .status(DutyStatus.valueOf("대기"))   // 모르고 이부분을 안넣었습니다.
+                    .user(user)
+                    .build();
+        }
     }
 }
