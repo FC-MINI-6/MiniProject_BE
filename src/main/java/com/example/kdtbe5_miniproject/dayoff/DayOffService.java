@@ -33,9 +33,11 @@ public class DayOffService {
                     dayOff.getEndDate().isEqual(registerDTO.getStartDate())) ||
                     (dayOff.getStartDate().isAfter(registerDTO.getEndDate()) ||
                             dayOff.getStartDate().isEqual(registerDTO.getEndDate())))) {
-                // 반차 체크
-                if ((dayOff.getType() == DayOffType.오전반차 || dayOff.getType() == DayOffType.오후반차) &&
-                        dayOff.getType() == registerDTO.getType()) {
+
+                // 동일한 날짜에 반차 두번 신청하는 경우를 제한
+                if (dayOff.getType() != DayOffType.연차) {
+                    throw new IllegalArgumentException("동일한 날짜에 반차를 두 번 신청할 수 없습니다.");
+                } else if (registerDTO.getType() != DayOffType.연차) {
                     throw new IllegalArgumentException("신청하려는 날짜가 이미 등록된 연차와 겹칩니다.");
                 }
             }
@@ -142,9 +144,7 @@ public class DayOffService {
             throw new IllegalArgumentException("이미 처리된 연차 신청은 취소할 수 없습니다.");
         }
 
-        dayOff.setStatus(DayOffStatus.valueOf("취소"));
-
-        // 취소된 연차의 사용일수를 다시 복구
-        dayOff.setNumOfDayOff(0.0f);
+        // 취소된 연차를 삭제
+        dayOffRepository.delete(dayOff);
     }
 }
