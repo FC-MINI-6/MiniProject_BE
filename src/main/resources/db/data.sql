@@ -21,6 +21,8 @@ insert into user_tb (id, username, password, email, phone_number, position, role
 values (9, '허경민', '0000', 'tester09@gmail.com', '01012345678', '4', '1', '2023-07-27', '2023-07-27');
 insert into user_tb (id, username, password, email, phone_number, position, roles, join_date, update_date)
 values (10, '양의지', '0000', 'tester10@gmail.com', '01012345678', '5', '1', '2023-07-27', '2023-07-27');
+insert into user_tb (id, username, password, email, phone_number, position, roles, join_date, update_date)
+values (11, '어드민', '{bcrypt}$2a$10$eSkd/bMFAO6z4Qa.6wQJ1.xDJLbmvHcFE0xwiAekH3u2QlzUExA/q', 'admin@admin.com', '01012345678', '5', '1', '2023-07-27', '2023-07-27');
 /*
  login_tb dummy 10
  */
@@ -47,6 +49,7 @@ insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, 
 insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (8, 8, '2023-09-27', '2023-09-27', '배고파서', '0', '0', 15);
 insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (9, 9, '2023-09-27', '2023-09-27', '배고파서', '2', '0', 15);
 insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (10, 10, '2023-09-29', '2023-09-29', '배고파서', '2', '0', 15);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (11, 10, '2023-09-29', '2023-10-29', '배고파서', '0', '0', 15);
 /*
  duty_tb dummy 10
  */
