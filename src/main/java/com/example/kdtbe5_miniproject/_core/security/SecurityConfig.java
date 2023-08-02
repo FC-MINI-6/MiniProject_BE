@@ -81,13 +81,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    protected void configure(HttpSecurity http)throws Exception {
-        http.logout()
-                .logoutSuccessUrl("/") //로그아웃 성공시 리다이렉트주소
-                .invalidateHttpSession(true) //로그아웃 이후 세션 전체 삭제 여부
-                .deleteCookies("JSSIONID");
-    }
-
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
