@@ -32,7 +32,7 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/register")
+    @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO joinDTO, Errors errors) {
         UserResponse.JoinDTO responseDTO = userService.joinUser(joinDTO);
         log.info(joinDTO.getUsername() + " Joined");
