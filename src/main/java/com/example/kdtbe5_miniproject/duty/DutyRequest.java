@@ -16,12 +16,14 @@ public class DutyRequest {
         private LocalDate date;
         @NotEmpty
         private String reason;
+        private LocalDate applyAt;
 
         public Duty toEntity(User user) {
             return Duty.builder()
                     .date(this.date)
                     .reason(this.reason)
-                    .status(DutyStatus.valueOf("대기"))   // 모르고 이부분을 안넣었습니다.
+                    .status(DutyStatus.valueOf("대기"))
+                    .applyAt(LocalDate.now())
                     .user(user)
                     .build();
         }
