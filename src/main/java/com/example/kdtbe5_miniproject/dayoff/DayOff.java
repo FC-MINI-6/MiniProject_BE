@@ -32,4 +32,18 @@ public class DayOff {
     private Float numOfDayOff;
     private LocalDate applyAt;
     private LocalDate processAt;
+
+    public float getUsedDayOff() {
+        if (this.status != null && this.status == DayOffStatus.valueOf("승인")) {
+            return this.numOfDayOff;
+        } else {
+            return 0f;
+        }
+    }
+    public void setStatus(DayOffStatus status) {
+        this.status = status;
+    }
+    public void setNumOfDayOff(float numOfDayOff) {
+        this.numOfDayOff = numOfDayOff;
+    }
 }
