@@ -10,5 +10,5 @@ public enum DutyStatus {
     승인(1),
     반려(2);
 
-    private final int typeStatus;
+    private final int typeNumber;
 }

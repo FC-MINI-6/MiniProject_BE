@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.kdtbe5_miniproject.user.User;
+import com.example.kdtbe5_miniproject.user.UserRoles;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +14,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -36,12 +38,15 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         }
 
         String jwt = prefixJwt.replace(JwtTokenProvider.TOKEN_PREFIX, "");
+
+        // TODO 변경 확인
         try {
             DecodedJWT decodedJWT = JwtTokenProvider.verify(jwt); // 신원인증 끝
             Long id = decodedJWT.getClaim("id").asLong();
             String roles = decodedJWT.getClaim("role").asString();
 
-            User user = User.builder().id(id).roles(roles).build();
+            User user = User.builder().id(id).roles(UserRoles.valueOf(roles)).build();
+//            User user = User.builder().id(id).roles(roles).build();
             CustomUserDetails myUserDetails = new CustomUserDetails(user);
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(

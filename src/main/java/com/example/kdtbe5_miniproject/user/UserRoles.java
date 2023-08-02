@@ -1,14 +1,13 @@
-package com.example.kdtbe5_miniproject.dayoff;
+package com.example.kdtbe5_miniproject.user;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum DayOffStatus {
-    대기(0),
-    승인(1),
-    반려(2);
+public enum UserRoles {
+    일반(0),
+    관리자(1);
 
     private final int typeNumber;
 }

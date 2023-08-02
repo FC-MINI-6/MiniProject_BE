@@ -6,6 +6,8 @@ import com.example.kdtbe5_miniproject.dayoff.DayOffType;
 import com.example.kdtbe5_miniproject.duty.Duty;
 import com.example.kdtbe5_miniproject.duty.DutyStatus;
 import com.example.kdtbe5_miniproject.user.User;
+import com.example.kdtbe5_miniproject.user.UserPosition;
+import com.example.kdtbe5_miniproject.user.UserRoles;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -65,8 +67,8 @@ public class AdminResponse {
         private String email;
         private String phoneNumber;
         private LocalDate joinDate;
-        private String position;
-        private String roles;
+        private UserPosition position;
+        private UserRoles roles;
 
         public UsersDTO(User user) {
             this.id = user.getId();
