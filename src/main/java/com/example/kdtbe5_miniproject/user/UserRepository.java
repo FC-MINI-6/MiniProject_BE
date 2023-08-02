@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -18,4 +19,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query(value = "UPDATE User SET password = :newPassword WHERE id = :id")
     void updateById(@Param("newPassword") String newPassword, @Param("id") Long id);
+
+    @Override
+    List<User> findAll();
 }

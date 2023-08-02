@@ -1,5 +1,4 @@
 package com.example.kdtbe5_miniproject.user;
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,6 +26,19 @@ public class UserResponse {
             this.position = user.getPosition();
             this.roles = user.getRoles();
             this.joinDate = user.getJoinDate();
+        }
+    }
+
+    @Getter
+    public static class AllUsersDTO {
+        private Long id;
+        private String username;
+        private UserPosition position;
+
+        public AllUsersDTO(User user) {
+            this.id = user.getId();
+            this.username = user.getUsername();
+            this.position = user.getPosition();
         }
     }
 }
