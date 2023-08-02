@@ -9,7 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -46,6 +47,6 @@ public class UserService {
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new UnCorrectPasswordException("비밀번호가 일치하지 않습니다.");
         }
-        userRepository.updateById(passwordEncoder.encode(request.getNewPassword()), request.getUserId());
+        userRepository.updateById(passwordEncoder.encode(request.getNewPassword()), LocalDateTime.now(), request.getUserId());
     }
 }
