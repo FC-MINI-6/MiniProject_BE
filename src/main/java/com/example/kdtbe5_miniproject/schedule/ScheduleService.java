@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,20 +22,24 @@ public class ScheduleService {
     private final UserRepository userRepository;
     private final ScheduleRepository scheduleRepository;
 
-    // 연차 스케줄
     @Transactional
-    public List<ScheduleResponse.DayOffScheduleDTO> findDayOffSchedule() {
+    public List<ScheduleResponse.DayOffScheduleDTO> findDayOffScheduleByMonth(int year, int month) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
         DayOffStatus status = DayOffStatus.valueOf("승인");
-        return scheduleRepository.filterDayOffSchedule(status).stream()
+
+        return scheduleRepository.filterDayOffSchedule(status, startDate, endDate).stream()
                 .map(ScheduleResponse.DayOffScheduleDTO::new)
                 .collect(Collectors.toList());
     }
 
-    // 당직 스케줄
     @Transactional
-    public List<ScheduleResponse.DutyScheduleDTO> findDutySchedule() {
+    public List<ScheduleResponse.DutyScheduleDTO> findDutyScheduleByMonth(int year, int month) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.with(TemporalAdjusters.lastDayOfMonth());
         DutyStatus status = DutyStatus.valueOf("승인");
-        return scheduleRepository.filterDutySchedule(status).stream()
+
+        return scheduleRepository.filterDutySchedule(status, startDate, endDate).stream()
                 .map(ScheduleResponse.DutyScheduleDTO::new)
                 .collect(Collectors.toList());
     }

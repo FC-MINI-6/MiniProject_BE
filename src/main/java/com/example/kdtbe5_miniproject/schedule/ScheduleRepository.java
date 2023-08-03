@@ -21,10 +21,12 @@ public class ScheduleRepository {
     // 연차
     // 승인 status로 조회
     // 날짜 조회 추가 필요
-    public List<DayOff> filterDayOffSchedule(DayOffStatus status) {
+    public List<DayOff> filterDayOffSchedule(DayOffStatus status, LocalDate startDate, LocalDate endDate) {
         Query query = entityManager.createQuery(
-                "SELECT d FROM DayOff d INNER JOIN d.user u WHERE d.status = :status", DayOff.class);
+                "SELECT d FROM DayOff d INNER JOIN d.user u WHERE d.status = :status AND ((d.startDate >= :startDate AND d.startDate <= :endDate) OR (d.endDate >= :startDate AND d.endDate <= :endDate))", DayOff.class);
         query.setParameter("status", status);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
 
         return query.getResultList();
     }
@@ -32,10 +34,12 @@ public class ScheduleRepository {
     // 당직
     // 승인 status로 조회
     // 날짜 조회 추가 필요
-    public List<Duty> filterDutySchedule(DutyStatus status) {
+    public List<Duty> filterDutySchedule(DutyStatus status, LocalDate startDate, LocalDate endDate) {
         Query query = entityManager.createQuery(
-                "SELECT d FROM Duty d INNER JOIN d.user u WHERE d.status = :status", Duty.class);
+                "SELECT d FROM Duty d INNER JOIN d.user u WHERE d.status = :status AND d.date BETWEEN :startDate AND :endDate", Duty.class);
         query.setParameter("status", status);
+        query.setParameter("startDate", startDate);
+        query.setParameter("endDate", endDate);
 
         return query.getResultList();
     }

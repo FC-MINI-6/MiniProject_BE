@@ -4,10 +4,7 @@ import com.example.kdtbe5_miniproject._core.util.ApiUtils;
 import com.example.kdtbe5_miniproject.user.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -20,13 +17,12 @@ public class ScheduleController {
 
     private final ScheduleService scheduleService;
 
-    // 연차 + 당직 스케줄
-    @GetMapping("/schedule")
-    public ResponseEntity<?> allList() {
-
+    // 월별 연차 + 당직 스케줄
+    @GetMapping("/schedule/{year}/{month}")
+    public ResponseEntity<?> scheduleByMonth(@PathVariable int year, @PathVariable int month) {
         HashMap<String, List> lists = new HashMap<>();
-        lists.put("dayOffList", scheduleService.findDayOffSchedule());
-        lists.put("dutyList", scheduleService.findDutySchedule());
+        lists.put("dayOffList", scheduleService.findDayOffScheduleByMonth(year, month));
+        lists.put("dutyList", scheduleService.findDutyScheduleByMonth(year, month));
 
         return ResponseEntity.ok().body(ApiUtils.success(lists));
     }
