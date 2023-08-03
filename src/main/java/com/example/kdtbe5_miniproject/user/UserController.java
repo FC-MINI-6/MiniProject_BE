@@ -33,13 +33,15 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
 
+    // 회원가입
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody @Valid UserRequest.JoinDTO joinDTO, Errors errors) {
-        UserResponse.JoinDTO responseDTO = userService.joinUser(joinDTO);
+        userService.joinUser(joinDTO);
         log.info(joinDTO.getUsername() + " Joined");
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        return ResponseEntity.ok().body(ApiUtils.success("회원가입이 완료되었습니다"));
     }
 
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid UserRequest.LoginDTO loginDTO, Errors errors, HttpServletRequest request) {
         try {
@@ -58,6 +60,7 @@ public class UserController {
         }
     }
 
+    // 로그인 기록
     private void addLoginHistory(HttpServletRequest request, CustomUserDetails myUserDetails) {
         LoginHistoryRequest.LoginHistoryDTO loginHistoryDTO = new LoginHistoryRequest.LoginHistoryDTO();
 
@@ -69,6 +72,7 @@ public class UserController {
         loginHistoryService.save(loginHistoryDTO);
     }
 
+    // 로그아웃
     @GetMapping(value = "/logout")
     public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -78,13 +82,14 @@ public class UserController {
         return "redirect:/login";
     }
 
+    // 핸드폰 번호 변경
     @PutMapping("/mypage/updatePhoneNumber")
     public ResponseEntity<?> updatePhoneNumber(@AuthenticationPrincipal CustomUserDetails updateUser, @RequestBody @Valid UserRequest.UpdateDTO updateDTO) {
         userService.updatePhoneNumber(updateUser.getUserId(), updateDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("전화번호가 변경되었습니다."));
+        return ResponseEntity.ok().body(ApiUtils.success("변경되었습니다."));
     }
 
-
+    // 비밀번호 변경
     @PutMapping("/mypage/updatePassword")
     public ResponseEntity<?> userPasswordModify(@RequestBody UserRequest.ModifyPwdDTO request) {
         userService.updatePwd(request);
