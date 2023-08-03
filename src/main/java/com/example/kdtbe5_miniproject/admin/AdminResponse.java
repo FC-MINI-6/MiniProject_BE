@@ -21,6 +21,7 @@ public class AdminResponse {
         private Long id;
         private Long userId;
         private String userName;
+        private UserPosition position;
         private LocalDate startDate;
         private LocalDate endDate;
         private String reason;
@@ -31,6 +32,7 @@ public class AdminResponse {
             this.id = dayOff.getId();
             this.userId = dayOff.getUser().getId();
             this.userName = dayOff.getUser().getUsername();
+            this.position = dayOff.getUser().getPosition();
             this.startDate = dayOff.getStartDate();
             this.endDate = dayOff.getEndDate();
             this.reason = dayOff.getReason();
@@ -63,6 +65,7 @@ public class AdminResponse {
         private Long id;
         private Long userId;
         private String username;
+        private UserPosition position;
         private LocalDate date;
         private String reason;
         private DutyStatus status;
@@ -71,6 +74,7 @@ public class AdminResponse {
             this.id = duty.getId();
             this.userId = duty.getUser().getId();
             this.username = duty.getUser().getUsername();
+            this.position = duty.getUser().getPosition();
             this.date = duty.getDate();
             this.reason = duty.getReason();
             this.status = duty.getStatus();
