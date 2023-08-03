@@ -1,5 +1,6 @@
 package com.example.kdtbe5_miniproject.user;
 
+import com.example.kdtbe5_miniproject._core.errors.exception.DuplicatedEmailException;
 import com.example.kdtbe5_miniproject._core.errors.exception.UnCorrectPasswordException;
 import com.example.kdtbe5_miniproject._core.errors.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,11 @@ public class UserService {
 
     @Transactional
     public UserResponse.JoinDTO joinUser(UserRequest.JoinDTO joinDTO) {
+
+        Optional<User> userOP =  userRepository.findByEmail(joinDTO.getEmail());
+        if(userOP.isPresent())
+            throw new DuplicatedEmailException("이미 사용중인 이메일입니다");
+
         joinDTO.setPassword(passwordEncoder.encode(joinDTO.getPassword()));
 
         //사용자 정보 암호화 - 기능 구현 시 헷갈릴 것 같아서 주석 처리
