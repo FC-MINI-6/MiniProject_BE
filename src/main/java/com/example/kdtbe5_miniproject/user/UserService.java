@@ -19,6 +19,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // 회원가입
     @Transactional
     public UserResponse.JoinDTO joinUser(UserRequest.JoinDTO joinDTO) {
 
@@ -37,6 +38,7 @@ public class UserService {
         return new UserResponse.JoinDTO(userPS);
     }
 
+    // 핸드폰번호 변경
     @Transactional
     public void updatePhoneNumber(Long userId, UserRequest.UpdateDTO updateDTO) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자 정보가 없습니다."));
@@ -44,6 +46,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    // 비밀번호 변경
     @Transactional
     public void updatePwd(UserRequest.ModifyPwdDTO request) {
         User user = userRepository.findById(request.getUserId())
