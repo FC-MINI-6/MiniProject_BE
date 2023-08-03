@@ -28,7 +28,7 @@ public class DayOffService {
         List<DayOff> dayOffs = dayOffRepository.findByUser(user);
 
         // 동일한 날짜에 신청했는지 체크
-        for(DayOff dayOff : dayOffs) {
+        for (DayOff dayOff : dayOffs) {
             if (!((dayOff.getEndDate().isBefore(registerDTO.getStartDate()) ||
                     dayOff.getEndDate().isEqual(registerDTO.getStartDate())) ||
                     (dayOff.getStartDate().isAfter(registerDTO.getEndDate()) ||
@@ -49,10 +49,11 @@ public class DayOffService {
         }
 
         // 연차 유형에 따른 신청일 계산
-        float appliedDayOff = 0.0f;
+        float appliedDayOff = 1.0f;
         if (registerDTO.getType() == DayOffType.연차) {
             appliedDayOff = registerDTO.getStartDate().datesUntil(registerDTO.getEndDate()).filter(d -> d.getDayOfWeek().getValue() < 6).count();
         } else if (registerDTO.getType() == DayOffType.오전반차 || registerDTO.getType() == DayOffType.오후반차) {
+            // 반차일 경우 총 연차에서 0.5 차감
             appliedDayOff = 0.5f;
         }
 
@@ -62,62 +63,40 @@ public class DayOffService {
         }
 
         // 남은 휴가 확인
-        float totalDayOff = determineInitialDayOff(user);
+        float totalDayOff = user.determineInitialDayOff();
         float usedDayOff = 0f;
 
-        for(DayOff dayOff : dayOffs){
+        for (DayOff dayOff : dayOffs) {
             usedDayOff += dayOff.getStartDate().datesUntil(dayOff.getEndDate()).filter(d -> d.getDayOfWeek().getValue() < 6).count();
         }
 
-        float remainingDayOff = totalDayOff - usedDayOff;
+        float remainingDayOff = totalDayOff - usedDayOff - appliedDayOff;
 
-        if (remainingDayOff < appliedDayOff) {
+        if (remainingDayOff < 0) {
             throw new IllegalArgumentException("남은 연차가 부족합니다.");
         }
-
 
         DayOff dayOff = registerDTO.toEntity(user, appliedDayOff);
         dayOffRepository.save(dayOff);
     }
-
 
     // 나의 남은 연차 (초기 연차만 설정)
     @Transactional(readOnly = true)
     public DayOffResponse.MyDayOffDTO myDayOffInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
 
-        float totalDayOff = determineInitialDayOff(user);
+        float totalDayOff = user.determineInitialDayOff();
         float usedDayOff = 0;
-
         List<DayOff> dayOffs = dayOffRepository.findByUser(user);
+
         for(DayOff dayOff : dayOffs){
-            usedDayOff += dayOff.getUsedDayOff();
+            if (dayOff.getStatus() == DayOffStatus.승인 || dayOff.getStatus() == DayOffStatus.대기) {
+                usedDayOff += dayOff.getUsedDayOff();
+            }
         }
 
         float remainingDayOff = totalDayOff - usedDayOff;
         return new DayOffResponse.MyDayOffDTO(totalDayOff, usedDayOff, remainingDayOff);
-    }
-
-
-
-    // 직급별 연차 계산
-    private int determineInitialDayOff(User user) {
-        int position = user.getPosition().getTypeNumber();
-        if (position == 0) {
-            return 15;                  // 사원
-        } else if (position == 1) {
-            return 17;                  // 주임
-        }else if (position == 2) {
-            return 20;                  // 대리
-        }else if (position == 3) {
-            return 22;                  // 과장
-        }else if (position == 4) {
-            return 23;                  // 차장
-        } else if (position == 5) {
-            return 26;                  // 부장
-        } else {
-            throw new IllegalArgumentException("직급: " + position);
-        }
     }
 
     // 내 연차 리스트

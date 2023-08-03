@@ -32,4 +32,23 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = newPhoneNum;
     }
 
+    // 직급별 연차 계산
+    public int determineInitialDayOff() {
+        int position = this.getPosition().getTypeNumber();
+        if (position == 0) {
+            return 15;                  // 사원
+        } else if (position == 1) {
+            return 17;                  // 주임
+        } else if (position == 2) {
+            return 20;                  // 대리
+        } else if (position == 3) {
+            return 22;                  // 과장
+        } else if (position == 4) {
+            return 23;                  // 차장
+        } else if (position == 5) {
+            return 26;                  // 부장
+        } else {
+            throw new IllegalArgumentException("직급: " + position);
+        }
+    }
 }

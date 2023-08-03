@@ -34,12 +34,13 @@ public class DayOff {
     private LocalDate processAt;
 
     public float getUsedDayOff() {
-        if (this.status != null && this.status == DayOffStatus.valueOf("승인")) {
+        if (this.status != null && (this.status == DayOffStatus.valueOf("승인") || this.status == DayOffStatus.valueOf("대기"))) {
             return this.numOfDayOff;
         } else {
             return 0f;
         }
     }
+
     public void setStatus(DayOffStatus status) {
         this.status = status;
     }
