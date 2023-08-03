@@ -4,7 +4,6 @@ import com.example.kdtbe5_miniproject.dayoff.DayOff;
 import com.example.kdtbe5_miniproject.dayoff.DayOffStatus;
 import com.example.kdtbe5_miniproject.duty.Duty;
 import com.example.kdtbe5_miniproject.duty.DutyStatus;
-import com.example.kdtbe5_miniproject.user.User;
 import com.example.kdtbe5_miniproject.user.UserPosition;
 import com.example.kdtbe5_miniproject.user.UserRoles;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -28,6 +28,16 @@ public class AdminRepository {
 
         return query.getResultList();
     }
+
+    public List<Long> findDayOffByStatus(Long userId, DayOffStatus status) {
+        Query query = entityManager.createQuery(
+                "SELECT d.id FROM DayOff d INNER JOIN d.user u WHERE d.status = :status AND d.user.id = :userId ORDER BY d.applyAt ASC");
+        query.setParameter("status", status);
+        query.setParameter("userId", userId);
+
+        return query.getResultList();
+    }
+
 
     public DayOff findDayOffById(Long id) {
         Query query = entityManager.createQuery(
@@ -47,15 +57,16 @@ public class AdminRepository {
 
     //TODO 최근 날짜로 조회
     public List<Object[]> findAllUsers() {
+        //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
         Query query = entityManager.createQuery(
-                "SELECT u, d.numOfDayOff FROM User u LEFT JOIN DayOff d ON u.id = d.user.id");
+                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u");
 
         return query.getResultList();
     }
 
     public Object[] findUserById(Long userId) {
         Query query = entityManager.createQuery(
-                "SELECT u, d.numOfDayOff FROM User u LEFT JOIN DayOff d ON u.id = d.user.id WHERE u.id = :id");
+                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u WHERE u.id = :id");
         query.setParameter("id", userId);
 
         return (Object[]) query.getSingleResult();
@@ -63,12 +74,22 @@ public class AdminRepository {
 
 
     @Transactional
-    public void updateNumOfDayOffById(Long id, Float deduction, DayOffStatus status) {
+    public void updateNumOfDayOffById(Long id, Float deduction, DayOffStatus status, LocalDate now) {
         Query query = entityManager.createQuery(
-                "UPDATE DayOff SET status = :status ,numOfDayOff = numOfDayOff - :deduction WHERE id = :id");
+                "UPDATE DayOff SET status = :status ,numOfDayOff = numOfDayOff + :deduction, processAt = :now WHERE id = :id");
         query.setParameter("id", id);
         query.setParameter("deduction", deduction);
         query.setParameter("status", status);
+        query.setParameter("now", now);
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void updateNumOfDayOffById(Long id, Float deduction) {
+        Query query = entityManager.createQuery(
+                "UPDATE DayOff SET numOfDayOff = numOfDayOff + :deduction WHERE id = :id");
+        query.setParameter("id", id);
+        query.setParameter("deduction", deduction);
         query.executeUpdate();
     }
 
