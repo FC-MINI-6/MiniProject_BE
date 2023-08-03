@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -37,6 +38,14 @@ public class UserService {
 
         User userPS = userRepository.save(joinDTO.toEntity());
         return new UserResponse.JoinDTO(userPS);
+    }
+
+    // 로그인 사용자 정보 조회
+    @Transactional
+    public UserResponse.LoginDTO loginInform(UserRequest.LoginDTO loginDTO) {
+        Optional<User> userOP = userRepository.findByEmail(loginDTO.getEmail());
+        UserResponse.LoginDTO user = userOP.get().toEntity();
+        return user;
     }
 
     // 핸드폰번호 변경
