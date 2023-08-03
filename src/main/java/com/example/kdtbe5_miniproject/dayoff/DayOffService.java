@@ -76,7 +76,7 @@ public class DayOffService {
             throw new IllegalArgumentException("남은 연차가 부족합니다.");
         }
 
-        DayOff dayOff = registerDTO.toEntity(user, appliedDayOff);
+        DayOff dayOff = registerDTO.toEntity(user, remainingDayOff);
         dayOffRepository.save(dayOff);
     }
 
