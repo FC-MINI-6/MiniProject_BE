@@ -21,6 +21,7 @@ public class DayOffService {
     private final LocalDate applicationDeadline = LocalDate.of(2023, 12, 31);
 
     // 연차 신청
+    // TODO 이미 신청중인 날짜에 중복신청 하는 경우 예외처리
     @Transactional
     public void registerDayOff(Long userId, DayOffRequest.RegisterDTO registerDTO) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
