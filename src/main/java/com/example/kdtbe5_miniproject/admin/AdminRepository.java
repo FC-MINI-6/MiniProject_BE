@@ -1,14 +1,18 @@
 package com.example.kdtbe5_miniproject.admin;
 
 import com.example.kdtbe5_miniproject.dayoff.DayOff;
+import com.example.kdtbe5_miniproject.dayoff.DayOffStatus;
 import com.example.kdtbe5_miniproject.duty.Duty;
-import com.example.kdtbe5_miniproject.user.User;
+import com.example.kdtbe5_miniproject.duty.DutyStatus;
+import com.example.kdtbe5_miniproject.user.UserPosition;
+import com.example.kdtbe5_miniproject.user.UserRoles;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -17,7 +21,7 @@ public class AdminRepository {
 
     private final EntityManager entityManager;
 
-    public List<DayOff> findDayOffByStatus(String status) {
+    public List<DayOff> findDayOffByStatus(DayOffStatus status) {
         Query query = entityManager.createQuery(
                 "SELECT d FROM DayOff d INNER JOIN d.user u WHERE d.status = :status", DayOff.class);
         query.setParameter("status", status);
@@ -25,7 +29,25 @@ public class AdminRepository {
         return query.getResultList();
     }
 
-    public List<Duty> findDutyByStatus(String status) {
+    public List<Long> findDayOffByStatus(Long userId, DayOffStatus status) {
+        Query query = entityManager.createQuery(
+                "SELECT d.id FROM DayOff d INNER JOIN d.user u WHERE d.status = :status AND d.user.id = :userId ORDER BY d.applyAt ASC");
+        query.setParameter("status", status);
+        query.setParameter("userId", userId);
+
+        return query.getResultList();
+    }
+
+
+    public DayOff findDayOffById(Long id) {
+        Query query = entityManager.createQuery(
+                "SELECT d FROM DayOff d WHERE d.id = :id", DayOff.class);
+        query.setParameter("id", id);
+
+        return (DayOff) query.getSingleResult();
+    }
+
+    public List<Duty> findDutyByStatus(DutyStatus status) {
         Query query = entityManager.createQuery(
                 "SELECT d FROM Duty d INNER JOIN d.user u WHERE d.status = :status", Duty.class);
         query.setParameter("status", status);
@@ -33,32 +55,55 @@ public class AdminRepository {
         return query.getResultList();
     }
 
-    public List<User> findAllUsers() {
+    //TODO 최근 날짜로 조회
+    public List<Object[]> findAllUsers() {
+        //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
         Query query = entityManager.createQuery(
-                "SELECT u FROM User u", User.class);
+                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u");
 
         return query.getResultList();
     }
 
-    public User findUserById(Long userId) {
+    public Object[] findUserById(Long userId) {
         Query query = entityManager.createQuery(
-                "SELECT u FROM User u WHERE id = :id", User.class);
+                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u WHERE u.id = :id");
         query.setParameter("id", userId);
 
-        return (User) query.getSingleResult();
+        return (Object[]) query.getSingleResult();
+    }
+
+
+    @Transactional
+    public void updateNumOfDayOffById(Long id, Float deduction, DayOffStatus status, LocalDate now) {
+        Query query = entityManager.createQuery(
+                "UPDATE DayOff SET status = :status ,numOfDayOff = numOfDayOff + :deduction, processAt = :now WHERE id = :id");
+        query.setParameter("id", id);
+        query.setParameter("deduction", deduction);
+        query.setParameter("status", status);
+        query.setParameter("now", now);
+        query.executeUpdate();
     }
 
     @Transactional
-    public void updateStatusById(Class<?> type, Long id, String status) {
+    public void updateNumOfDayOffById(Long id, Float deduction) {
         Query query = entityManager.createQuery(
-                "UPDATE " + type.getSimpleName() + " SET status = :status WHERE id = :id");
+                "UPDATE DayOff SET numOfDayOff = numOfDayOff + :deduction WHERE id = :id");
+        query.setParameter("id", id);
+        query.setParameter("deduction", deduction);
+        query.executeUpdate();
+    }
+
+    @Transactional
+    public void updateDutyById(Long id, DutyStatus status) {
+        Query query = entityManager.createQuery(
+                "UPDATE Duty SET status = :status WHERE id = :id");
         query.setParameter("id", id);
         query.setParameter("status", status);
         query.executeUpdate();
     }
 
     @Transactional
-    public void updateUserById(Long id, String phoneNumber, String position, String roles) {
+    public void updateUserById(Long id, String phoneNumber, UserPosition position, UserRoles roles) {
         Query query = entityManager.createQuery(
                 "UPDATE User SET phoneNumber = :phoneNumber, position = :position, roles = : roles WHERE id = :id");
         query.setParameter("id", id);

@@ -41,6 +41,24 @@ public class AdminResponse {
 
     @Getter
     @Setter
+    public static class DayOffInfoDTO {
+        private Long id;
+        private DayOffType type;
+        private Float numOfDayOff;
+        private LocalDate startDate;
+        private LocalDate endDate;
+
+        public DayOffInfoDTO(DayOff dayOff) {
+            this.id = dayOff.getId();
+            this.type = dayOff.getType();
+            this.numOfDayOff = dayOff.getNumOfDayOff();
+            this.startDate = dayOff.getStartDate();
+            this.endDate = dayOff.getEndDate();
+        }
+    }
+
+    @Getter
+    @Setter
     public static class DutyStatusDTO {
         private Long id;
         private Long userId;
@@ -69,6 +87,7 @@ public class AdminResponse {
         private LocalDate joinDate;
         private UserPosition position;
         private UserRoles roles;
+        private Float numOfDayOff;
 
         public UsersDTO(User user) {
             this.id = user.getId();

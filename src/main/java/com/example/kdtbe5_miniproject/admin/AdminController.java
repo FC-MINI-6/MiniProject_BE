@@ -1,8 +1,6 @@
 package com.example.kdtbe5_miniproject.admin;
 
 import com.example.kdtbe5_miniproject._core.util.ApiUtils;
-import com.example.kdtbe5_miniproject.dayoff.DayOff;
-import com.example.kdtbe5_miniproject.duty.Duty;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/admin")
 @Slf4j
 public class AdminController {
 
@@ -39,15 +38,18 @@ public class AdminController {
     }
 
     @PutMapping("/status/dayoff/{dayOffId}")
-    public ResponseEntity<?> dayOffModify(@PathVariable Long dayOffId, @RequestBody AdminRequest.TreatDTO request) {
-        adminService.modifyStatus(DayOff.class, dayOffId, request);
+    public ResponseEntity<?> dayOffModify(@PathVariable Long dayOffId, @RequestBody AdminRequest.TreatDayOffDTO request) {
+        if (adminService.findWaitingDayOffList(dayOffId).get(0) != dayOffId) {
+            throw new RuntimeException("이미 처리된 요청이거나, 해당 사용자의 이전 요청을 먼저 처리해주세요.");
+        }
+        adminService.modifyDayOffStatus(dayOffId, request);
 
         return ResponseEntity.ok().body(ApiUtils.success(request.getStatus() + "되었습니다."));
     }
 
     @PutMapping("/status/duty/{dutyId}")
-    public ResponseEntity<?> dutyModify(@PathVariable Long dutyId, @RequestBody AdminRequest.TreatDTO request) {
-        adminService.modifyStatus(Duty.class, dutyId, request);
+    public ResponseEntity<?> dutyModify(@PathVariable Long dutyId, @RequestBody AdminRequest.TreatDutyDTO request) {
+        adminService.modifyDutyStatus(dutyId, request);
 
         return ResponseEntity.ok().body(ApiUtils.success(request.getStatus() + "되었습니다."));
     }

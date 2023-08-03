@@ -21,6 +21,8 @@ insert into user_tb (id, username, password, email, phone_number, position, role
 values (9, '허경민', '0000', 'tester09@gmail.com', '01012345678', '4', '1', '2023-07-27', '2023-07-27');
 insert into user_tb (id, username, password, email, phone_number, position, roles, join_date, update_date)
 values (10, '양의지', '0000', 'tester10@gmail.com', '01012345678', '5', '1', '2023-07-27', '2023-07-27');
+insert into user_tb (id, username, password, email, phone_number, position, roles, join_date, update_date)
+values (11, '어드민', '{bcrypt}$2a$10$5nJepi7hydvCqZRDWjhlBe/isQmCbZFtmjUCAu8Bm7WAtfEfXMRUG', 'admin@admin.com', '01012345678', '5', '1', '2023-07-27', '2023-07-27');
 /*
  login_tb dummy 10
  */
@@ -37,16 +39,28 @@ insert into login_tb (id, user_id, ip, user_agent, login_at) values (10, 1, '255
 /*
  dayoff_tb dummy 10
  */
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (1, 10, '2023-08-27', '2023-08-27', '배고파서', '2', '1', 12);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (2, 6, '2023-08-27', '2023-08-27', '배고파서', '1', '2', 12);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (3, 9, '2023-08-28', '2023-08-28', '배고파서', '2', '0', 12);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (4, 10, '2023-08-29', '2023-08-29', '배고파서', '1', '1', 12);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (5, 9, '2023-09-02', '2023-09-02', '배고파서', '2', '0', 15);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (6, 8, '2023-09-04', '2023-09-05', '배고파서', '0', '0', 15);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (7, 7, '2023-09-06', '2023-09-06', '배고파서', '2', '0', 15);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (8, 8, '2023-09-27', '2023-09-27', '배고파서', '0', '0', 15);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (9, 9, '2023-09-27', '2023-09-27', '배고파서', '2', '0', 15);
-insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off) values (10, 10, '2023-09-29', '2023-09-29', '배고파서', '2', '0', 15);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (1, 10, '2023-08-27', '2023-08-27', '배고파서', '2', '1', 12, '2023-08-07', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (2, 6, '2023-08-27', '2023-08-27', '배고파서', '1', '2', 12, '2023-08-08', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (3, 9, '2023-08-28', '2023-08-28', '배고파서', '2', '0', 12, '2023-08-09', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (4, 10, '2023-08-29', '2023-08-29', '배고파서', '1', '1', 12, '2023-08-10', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (5, 9, '2023-09-02', '2023-09-02', '배고파서', '2', '0', 15, '2023-08-11', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (6, 8, '2023-09-04', '2023-09-05', '배고파서', '0', '0', 15, '2023-08-12', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (7, 7, '2023-09-06', '2023-09-06', '배고파서', '2', '0', 15, '2023-08-13', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (8, 8, '2023-09-27', '2023-09-27', '배고파서', '0', '0', 15, '2023-08-14', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (9, 9, '2023-09-27', '2023-09-27', '배고파서', '2', '0', 15, '2023-08-15', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (10, 10, '2023-09-29', '2023-09-29', '배고파서', '2', '0', 15, '2023-08-16', null);
+insert into dayoff_tb (id, user_id, start_date, end_date, reason, type, status, num_of_day_off, apply_at, process_at)
+values (11, 10, '2023-09-29', '2023-10-29', '배고파서', '0', '0', 15, '2023-08-17', null);
 /*
  duty_tb dummy 10
  */
