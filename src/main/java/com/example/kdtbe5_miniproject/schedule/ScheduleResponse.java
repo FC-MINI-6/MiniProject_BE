@@ -18,6 +18,8 @@ public class ScheduleResponse {
         private String username;
         private UserPosition position;
         private String reason;
+        private LocalDate startDate;
+        private LocalDate endDate;
 
         public DayOffScheduleDTO(DayOff dayOff) {
             this.id = dayOff.getId();
@@ -25,6 +27,8 @@ public class ScheduleResponse {
             this.username = dayOff.getUser().getUsername();
             this.position = dayOff.getUser().getPosition();
             this.reason = dayOff.getReason();
+            this.startDate = dayOff.getStartDate();
+            this.endDate = dayOff.getEndDate();
         }
     }
 
@@ -36,6 +40,7 @@ public class ScheduleResponse {
         private String username;
         private UserPosition position;
         private String reason;
+        private LocalDate date;
 
         public DutyScheduleDTO(Duty duty) {
             this.id = duty.getId();
@@ -43,6 +48,7 @@ public class ScheduleResponse {
             this.username = duty.getUser().getUsername();
             this.position = duty.getUser().getPosition();
             this.reason = duty.getReason();
+            this.date = duty.getDate();
         }
     }
 }
