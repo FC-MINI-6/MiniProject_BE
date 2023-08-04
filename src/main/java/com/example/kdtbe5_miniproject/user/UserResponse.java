@@ -12,8 +12,8 @@ public class UserResponse {
         private String email;
         private String username;
         private String phoneNumber;
-        private UserPosition position;
-        private UserRoles roles;
+        private int position;
+        private int roles;
         private Float numOfDayOff;
         private LocalDate joinDate;
         public JoinDTO(User user) {
@@ -21,8 +21,8 @@ public class UserResponse {
             this.email = user.getEmail();
             this.username = user.getUsername();
             this.phoneNumber = user.getPhoneNumber();
-            this.position = user.getPosition();
-            this.roles = user.getRoles();
+            this.position = user.getPosition().getTypeNumber();
+            this.roles = user.getRoles().getTypeNumber();
             this.joinDate = user.getJoinDate();
         }
     }
@@ -31,12 +31,12 @@ public class UserResponse {
     public static class AllUsersDTO {
         private Long id;
         private String username;
-        private UserPosition position;
+        private int position;
 
         public AllUsersDTO(User user) {
             this.id = user.getId();
             this.username = user.getUsername();
-            this.position = user.getPosition();
+            this.position = user.getPosition().getTypeNumber();
         }
     }
 
