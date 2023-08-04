@@ -41,6 +41,7 @@ public class UserResponse {
     }
 
     @Getter
+    @Setter
     @Builder
     public static class LoginDTO {
         private Long id;
@@ -50,6 +51,7 @@ public class UserResponse {
         private UserPosition position;
         private UserRoles roles;
         private LocalDate joinDate;
+        private String accessToken;
     }
 
 }
