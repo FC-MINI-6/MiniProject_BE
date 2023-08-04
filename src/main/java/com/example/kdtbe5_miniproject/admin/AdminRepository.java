@@ -56,10 +56,19 @@ public class AdminRepository {
     }
 
     //TODO 최근 날짜로 조회
+    /*
     public List<Object[]> findAllUsers() {
         //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
         Query query = entityManager.createQuery(
                 "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u");
+
+        return query.getResultList();
+    }
+    */
+    public List<Object[]> findAllUsers() {
+        //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
+        Query query = entityManager.createQuery(
+                "SELECT DISTINCT u.id, u FROM User u");
 
         return query.getResultList();
     }
