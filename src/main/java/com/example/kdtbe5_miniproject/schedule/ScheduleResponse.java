@@ -16,7 +16,7 @@ public class ScheduleResponse {
         private Long id;
         private Long userId;
         private String username;
-        private UserPosition position;
+        private int position;
         private String reason;
         private LocalDate startDate;
         private LocalDate endDate;
@@ -25,7 +25,7 @@ public class ScheduleResponse {
             this.id = dayOff.getId();
             this.userId = dayOff.getUser().getId();
             this.username = dayOff.getUser().getUsername();
-            this.position = dayOff.getUser().getPosition();
+            this.position = dayOff.getUser().getPosition().getTypeNumber();
             this.reason = dayOff.getReason();
             this.startDate = dayOff.getStartDate();
             this.endDate = dayOff.getEndDate();
