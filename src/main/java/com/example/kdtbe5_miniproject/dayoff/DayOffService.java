@@ -25,7 +25,6 @@ public class DayOffService {
     @Transactional
     public void registerDayOff(Long userId, DayOffRequest.RegisterDTO registerDTO) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
-
         List<DayOff> dayOffs = dayOffRepository.findByUser(user);
 
         // 동일한 날짜에 신청했는지 체크
@@ -63,19 +62,17 @@ public class DayOffService {
             throw new IllegalArgumentException("지난 날짜에 대한 연차 신청은 불가능합니다.");
         }
 
-        // 남은 휴가 확인
-        float totalDayOff = user.determineInitialDayOff();
-        float usedDayOff = 0f;
-
-        for (DayOff dayOff : dayOffs) {
-            usedDayOff += dayOff.getStartDate().datesUntil(dayOff.getEndDate()).filter(d -> d.getDayOfWeek().getValue() < 6).count();
-        }
-
-        float remainingDayOff = totalDayOff - usedDayOff - appliedDayOff;
-
+        // 연차를 계산할 때 사용자의 직급별 초기 연차를 가져옴
+        float initialDayOff = user.determineInitialDayOff();
+        
+        // 남은 연차 확인
+        float remainingDayOff = initialDayOff - appliedDayOff;
         if (remainingDayOff < 0) {
-            throw new IllegalArgumentException("남은 연차가 부족합니다.");
+            throw new IllegalArgumentException("남은 연차가 부족하여 연차를 사용할 수 없습니다.");
         }
+
+        // 남은 휴가 업데이트
+        user.setRemainingDayOff(remainingDayOff);
 
         DayOff dayOff = registerDTO.toEntity(user, appliedDayOff);
         dayOffRepository.save(dayOff);
@@ -86,7 +83,7 @@ public class DayOffService {
     public DayOffResponse.MyDayOffDTO myDayOffInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
 
-        float totalDayOff = user.determineInitialDayOff();
+        float grantedDayOff = user.determineInitialDayOff();
         float usedDayOff = 0;
         List<DayOff> dayOffs = dayOffRepository.findByUser(user);
 
@@ -96,9 +93,10 @@ public class DayOffService {
             }
         }
 
-        float remainingDayOff = totalDayOff - usedDayOff;
-        return new DayOffResponse.MyDayOffDTO(totalDayOff, usedDayOff, remainingDayOff);
+        // 남은 연차를 제외하고 지급 받은 연차와 사용한 연차만 출력
+        return new DayOffResponse.MyDayOffDTO(grantedDayOff, usedDayOff);
     }
+
 
     // 내 연차 리스트
     @Transactional(readOnly = true)
@@ -115,14 +113,12 @@ public class DayOffService {
         DayOff dayOff = dayOffRepository.findById(dayoffId).orElseThrow(() -> new UserNotFoundException("해당 연차 신청을 찾을 수 없습니다."));
 
         // 본인이 신청한 연차만 취소 가능하도록 체크
-        if (!dayOff.getUser().getId().equals(userId)) {
-            throw new IllegalArgumentException("본인이 신청한 연차만 취소할 수 있습니다.");
-        }
-
-        // 연차 신청의 상태를 취소로 변경
         if (dayOff.getStatus() == DayOffStatus.승인 || dayOff.getStatus() == DayOffStatus.반려) {
             throw new IllegalArgumentException("이미 처리된 연차 신청은 취소할 수 없습니다.");
         }
+
+        // 남은 휴가 업데이트
+        user.setRemainingDayOff(user.getRemainingDayOff() + dayOff.getNumOfDayOff());
 
         // 취소된 연차를 삭제
         dayOffRepository.delete(dayOff);
