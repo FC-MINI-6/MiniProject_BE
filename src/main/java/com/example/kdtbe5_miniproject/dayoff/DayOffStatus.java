@@ -12,4 +12,8 @@ public enum DayOffStatus {
     취소(3);
 
     private final int typeNumber;
+
+    public int getValue() {
+        return this.typeNumber;
+    }
 }

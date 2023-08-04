@@ -11,4 +11,8 @@ public enum DayOffType {
     오후반차(2);
 
     private final int typeNumber;
+
+    public int getValue() {
+        return this.typeNumber;
+    }
 }

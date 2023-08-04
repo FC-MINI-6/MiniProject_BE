@@ -10,5 +10,9 @@ public enum DutyStatus {
     승인(1),
     반려(2);
 
-    private final int typeNumber;
+    private final int status;
+
+    public int getValue() {
+        return this.status;
+    }
 }
