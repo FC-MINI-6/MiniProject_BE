@@ -73,6 +73,7 @@ public class AdminRepository {
         return query.getResultList();
     }
 
+    /*
     public Object[] findUserById(Long userId) {
         Query query = entityManager.createQuery(
                 "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u WHERE u.id = :id");
@@ -80,7 +81,15 @@ public class AdminRepository {
 
         return (Object[]) query.getSingleResult();
     }
+     */
 
+    public Object[] findUserById(Long userId) {
+        Query query = entityManager.createQuery(
+                "SELECT DISTINCT u.id, u FROM User u WHERE u.id = :id");
+        query.setParameter("id", userId);
+
+        return (Object[]) query.getSingleResult();
+    }
 
     @Transactional
     public void updateNumOfDayOffById(Long id, Float deduction, DayOffStatus status, LocalDate now) {
