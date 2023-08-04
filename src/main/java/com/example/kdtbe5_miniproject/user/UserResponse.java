@@ -1,4 +1,5 @@
 package com.example.kdtbe5_miniproject.user;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -38,4 +39,17 @@ public class UserResponse {
             this.position = user.getPosition();
         }
     }
+
+    @Getter
+    @Builder
+    public static class LoginDTO {
+        private Long id;
+        private String username;
+        private String email;
+        private String phoneNumber;
+        private UserPosition position;
+        private UserRoles roles;
+        private LocalDate joinDate;
+    }
+
 }

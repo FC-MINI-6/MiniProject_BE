@@ -32,6 +32,18 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = newPhoneNum;
     }
 
+    public UserResponse.LoginDTO toEntity() {
+        return UserResponse.LoginDTO.builder()
+                .id(this.id)
+                .username(this.username)
+                .email(this.email)
+                .phoneNumber(this.phoneNumber)
+                .position(this.position)
+                .roles(this.roles)
+                .joinDate(this.joinDate)
+                .build();
+    }
+
     // 직급별 연차 계산
     public int determineInitialDayOff() {
         int position = this.getPosition().getTypeNumber();

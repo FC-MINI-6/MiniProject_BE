@@ -22,7 +22,7 @@ public class DayOffController {
     public ResponseEntity<?> registerDayOff(@RequestBody @Valid DayOffRequest.RegisterDTO registerDTO, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         User user = customUserDetails.getUser();
         dayOffService.registerDayOff(user.getId(), registerDTO);
-        return ResponseEntity.ok().body(ApiUtils.success("등록이 완료되었습니다."));
+        return ResponseEntity.ok().body(ApiUtils.success("연차 신청이 완료되었습니다."));
     }
 
     // 나의 연차 개수

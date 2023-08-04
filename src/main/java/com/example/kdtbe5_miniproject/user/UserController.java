@@ -53,7 +53,9 @@ public class UserController {
             String jwt = JwtTokenProvider.create(myUserDetails.getUser());
             addLoginHistory(request, myUserDetails);
 
-            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(null));
+            UserResponse.LoginDTO user = userService.loginInform(loginDTO);
+
+            return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(user));
 
         } catch (Exception e) {
             throw new Exception401("인증되지 않았습니다");

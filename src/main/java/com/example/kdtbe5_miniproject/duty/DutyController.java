@@ -23,7 +23,7 @@ public class DutyController {
     public ResponseEntity<?> createDuty(@RequestBody @Valid DutyRequest.DutyDTO dutyDTO, @AuthenticationPrincipal CustomUserDetails customUserDetails) {
         User user = customUserDetails.getUser();
         DutyResponse.DutyDTO responseDTO = dutyService.createDuty(dutyDTO, user.getId());
-        return ResponseEntity.ok().body(ApiUtils.success(responseDTO));
+        return ResponseEntity.ok().body(ApiUtils.success("당직 신청이 완료되었습니다."));
     }
 
     // 내 당직 리스트
