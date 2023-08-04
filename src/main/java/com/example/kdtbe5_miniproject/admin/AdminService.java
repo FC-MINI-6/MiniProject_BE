@@ -84,9 +84,9 @@ public class AdminService {
         Float deduction = 0F;
         if (request.getStatus().equals(DayOffStatus.반려)) {
             AdminResponse.DayOffInfoDTO dayOff = new AdminResponse.DayOffInfoDTO(adminRepository.findDayOffById(id));
-            if (dayOff.getType().equals(DayOffType.연차)) {
+            if (dayOff.equals(DayOffType.연차)) {
                 deduction = Float.valueOf(ChronoUnit.DAYS.between(dayOff.getStartDate(), dayOff.getEndDate()));
-            } else if (dayOff.getType().equals(DayOffType.오전반차) || dayOff.getType().equals(DayOffType.오후반차)) {
+            } else if (dayOff.equals(DayOffType.오전반차) || dayOff.equals(DayOffType.오후반차)) {
                 deduction = 0.5F;
             }
             modifyWaitingDayOffs(id, deduction);
