@@ -54,6 +54,7 @@ public class UserController {
             addLoginHistory(request, myUserDetails);
 
             UserResponse.LoginDTO user = userService.loginInform(loginDTO);
+            user.setAccessToken(jwt);
 
             return ResponseEntity.ok().header("Authorization", jwt).body(ApiUtils.success(user));
 
