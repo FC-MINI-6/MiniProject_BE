@@ -59,6 +59,7 @@ public class AdminController {
         return ResponseEntity.ok().body(ApiUtils.success(request.getStatus() + "되었습니다."));
     }
 
+    // 사용자 정보 변경 (전화번호, 직급, 권한)
     @PutMapping("/users/update/{userId}")
     public ResponseEntity<?> userModify(@PathVariable Long userId, @RequestBody AdminRequest.UserDetailsDTO request) {
         adminService.modifyUser(userId, request);
