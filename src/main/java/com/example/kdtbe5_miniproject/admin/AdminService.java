@@ -42,7 +42,7 @@ public class AdminService {
         List<Object[]> resultList = adminRepository.findAllUsers();
         for (Object[] result : resultList) {
             AdminResponse.UsersDTO user = new AdminResponse.UsersDTO((User) result[1]);
-            user.setNumOfDayOff((Float) result[2]);
+//            user.setNumOfDayOff((Float) result[2]);
             userList.add(user);
         }
         return userList;
@@ -53,7 +53,7 @@ public class AdminService {
     public AdminResponse.UsersDTO findUserDetail(Long userId) {
         Object[] result = adminRepository.findUserById(userId);
         AdminResponse.UsersDTO user = new AdminResponse.UsersDTO((User) result[1]);
-        user.setNumOfDayOff((Float) result[2]);
+//        user.setNumOfDayOff((Float) result[2]);
 
         return user;
     }
