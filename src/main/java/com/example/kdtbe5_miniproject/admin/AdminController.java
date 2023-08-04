@@ -43,9 +43,6 @@ public class AdminController {
     // 연차 승인or반려
     @PutMapping("/status/dayoff/{dayOffId}")
     public ResponseEntity<?> dayOffModify(@PathVariable Long dayOffId, @RequestBody AdminRequest.TreatDayOffDTO request) {
-        if (adminService.findWaitingDayOffList(dayOffId).get(0) != dayOffId) {
-            throw new RuntimeException("이미 처리된 요청이거나, 해당 사용자의 이전 요청을 먼저 처리해주세요.");
-        }
         adminService.modifyDayOffStatus(dayOffId, request);
 
         return ResponseEntity.ok().body(ApiUtils.success(request.getStatus() + "되었습니다."));
