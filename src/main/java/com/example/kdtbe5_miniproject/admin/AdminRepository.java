@@ -64,6 +64,14 @@ public class AdminRepository {
 
         return query.getResultList();
     }
+    */
+    public List<Object[]> findAllUsers() {
+        //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
+        Query query = entityManager.createQuery(
+                "SELECT DISTINCT u.id, u FROM User u");
+
+        return query.getResultList();
+    }
 
     public User findUserById(Long userId) {
         Query query = entityManager.createQuery(
@@ -72,7 +80,15 @@ public class AdminRepository {
 
         return (User) query.getSingleResult();
     }
+     */
 
+    public Object[] findUserById(Long userId) {
+        Query query = entityManager.createQuery(
+                "SELECT DISTINCT u.id, u FROM User u WHERE u.id = :id");
+        query.setParameter("id", userId);
+
+        return (Object[]) query.getSingleResult();
+    }
 
     @Transactional
     public void updateNumOfDayOffById(Long id, DayOffStatus status, LocalDate now) {

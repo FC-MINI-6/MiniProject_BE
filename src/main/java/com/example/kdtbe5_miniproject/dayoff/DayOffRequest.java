@@ -23,6 +23,7 @@ public class DayOffRequest {
         @NotNull
         private String reason;
 
+        /*
         public DayOff toEntity(User user, float numOfDayOff) {
             return DayOff.builder()
                     .type(this.type)
@@ -33,6 +34,19 @@ public class DayOffRequest {
                     .applyAt(LocalDate.now())
                     .user(user)
                     .numOfDayOff(numOfDayOff)
+                    .build();
+        }
+         */
+
+        public DayOff toEntity(User user) {
+            return DayOff.builder()
+                    .type(this.type)
+                    .startDate(this.startDate)
+                    .endDate(this.endDate)
+                    .reason(this.reason)
+                    .status(DayOffStatus.valueOf("대기"))
+                    .applyAt(LocalDate.now())
+                    .user(user)
                     .build();
         }
     }

@@ -9,10 +9,16 @@ public class DayOffResponse {
 
     @Getter
     public static class MyDayOffDTO {
-        private float valid;
+        private float numOfInitialDayOff;
 
+        /*
         public MyDayOffDTO(float valid, float used, float expired) {
             this.valid = valid;
+        }
+        */
+
+        public MyDayOffDTO(float numOfInitialDayOff) {
+            this.numOfInitialDayOff = numOfInitialDayOff;
         }
     }
 
