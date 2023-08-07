@@ -84,7 +84,7 @@ public class AdminResponse {
     @Getter
     @Setter
     public static class UsersDTO {
-        private Long id;
+        private Long userId;
         private String username;
         private String email;
         private String phoneNumber;
@@ -93,7 +93,7 @@ public class AdminResponse {
         private int roles;
 
         public UsersDTO(User user) {
-            this.id = user.getId();
+            this.userId = user.getId();
             this.username = user.getUsername();
             this.email = user.getEmail();
             this.phoneNumber = user.getPhoneNumber();
