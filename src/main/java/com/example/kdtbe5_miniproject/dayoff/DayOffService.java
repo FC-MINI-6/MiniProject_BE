@@ -49,6 +49,12 @@ public class DayOffService {
             throw new IllegalArgumentException("연차 신청 마감일이 지났습니다.");
         }
 
+        // 지난 날짜에 대한 연차 신청 체크
+        if (registerDTO.getStartDate().isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("지난 날짜에 대한 연차 신청은 불가능합니다.");
+        }
+
+        /*
         // 연차 유형에 따른 신청일 계산
         float appliedDayOff = 1.0f;
         if (registerDTO.getType() == DayOffType.연차) {
@@ -56,11 +62,6 @@ public class DayOffService {
         } else if (registerDTO.getType() == DayOffType.오전반차 || registerDTO.getType() == DayOffType.오후반차) {
             // 반차일 경우 총 연차에서 0.5 차감
             appliedDayOff = 0.5f;
-        }
-
-        // 지난 날짜에 대한 연차 신청 체크
-        if (registerDTO.getStartDate().isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("지난 날짜에 대한 연차 신청은 불가능합니다.");
         }
 
         // 남은 휴가 확인
@@ -77,7 +78,12 @@ public class DayOffService {
             throw new IllegalArgumentException("남은 연차가 부족합니다.");
         }
 
+        */
+
+        /*
         DayOff dayOff = registerDTO.toEntity(user, appliedDayOff);
+         */
+        DayOff dayOff = registerDTO.toEntity(user);
         dayOffRepository.save(dayOff);
     }
 
@@ -86,7 +92,9 @@ public class DayOffService {
     public DayOffResponse.MyDayOffDTO myDayOffInfo(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException("사용자를 찾을 수 없습니다."));
 
-        float totalDayOff = user.determineInitialDayOff();
+        float numOfInitialDayOff = user.determineInitialDayOff();
+
+        /*
         float usedDayOff = 0;
         List<DayOff> dayOffs = dayOffRepository.findByUser(user);
 
@@ -97,7 +105,13 @@ public class DayOffService {
         }
 
         float remainingDayOff = totalDayOff - usedDayOff;
+         */
+
+        /*
         return new DayOffResponse.MyDayOffDTO(totalDayOff, usedDayOff, remainingDayOff);
+        */
+
+        return new DayOffResponse.MyDayOffDTO(numOfInitialDayOff);
     }
 
     // 내 연차 리스트
