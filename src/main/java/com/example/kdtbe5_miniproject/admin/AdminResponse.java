@@ -91,8 +91,7 @@ public class AdminResponse {
         private LocalDate joinDate;
         private int position;
         private int roles;
-//        private Float numOfDayOff;
-
+      
         public UsersDTO(User user) {
             this.id = user.getId();
             this.username = user.getUsername();

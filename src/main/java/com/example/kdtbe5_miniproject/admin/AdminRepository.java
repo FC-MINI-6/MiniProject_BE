@@ -4,6 +4,7 @@ import com.example.kdtbe5_miniproject.dayoff.DayOff;
 import com.example.kdtbe5_miniproject.dayoff.DayOffStatus;
 import com.example.kdtbe5_miniproject.duty.Duty;
 import com.example.kdtbe5_miniproject.duty.DutyStatus;
+import com.example.kdtbe5_miniproject.user.User;
 import com.example.kdtbe5_miniproject.user.UserPosition;
 import com.example.kdtbe5_miniproject.user.UserRoles;
 import lombok.RequiredArgsConstructor;
@@ -56,11 +57,10 @@ public class AdminRepository {
     }
 
     //TODO 최근 날짜로 조회
-    /*
-    public List<Object[]> findAllUsers() {
+    public List<User> findAllUsers() {
         //대기 상태인 연차 중 numOfDayOff가 가장 낮은 값으로 가져옴
         Query query = entityManager.createQuery(
-                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u");
+                "SELECT u From User u", User.class);
 
         return query.getResultList();
     }
@@ -73,13 +73,12 @@ public class AdminRepository {
         return query.getResultList();
     }
 
-    /*
-    public Object[] findUserById(Long userId) {
+    public User findUserById(Long userId) {
         Query query = entityManager.createQuery(
-                "SELECT DISTINCT u.id, u, (SELECT MIN(d.numOfDayOff) FROM DayOff d WHERE d.user = u AND d.status = '0') FROM User u WHERE u.id = :id");
+                "SELECT u FROM User u WHERE u.id = :id", User.class);
         query.setParameter("id", userId);
 
-        return (Object[]) query.getSingleResult();
+        return (User) query.getSingleResult();
     }
      */
 
@@ -92,31 +91,22 @@ public class AdminRepository {
     }
 
     @Transactional
-    public void updateNumOfDayOffById(Long id, Float deduction, DayOffStatus status, LocalDate now) {
+    public void updateNumOfDayOffById(Long id, DayOffStatus status, LocalDate now) {
         Query query = entityManager.createQuery(
-                "UPDATE DayOff SET status = :status ,numOfDayOff = numOfDayOff + :deduction, processAt = :now WHERE id = :id");
+                "UPDATE DayOff SET status = :status, processAt = :now WHERE id = :id");
         query.setParameter("id", id);
-        query.setParameter("deduction", deduction);
         query.setParameter("status", status);
         query.setParameter("now", now);
         query.executeUpdate();
     }
 
     @Transactional
-    public void updateNumOfDayOffById(Long id, Float deduction) {
+    public void updateDutyById(Long id, DutyStatus status, LocalDate now) {
         Query query = entityManager.createQuery(
-                "UPDATE DayOff SET numOfDayOff = numOfDayOff + :deduction WHERE id = :id");
-        query.setParameter("id", id);
-        query.setParameter("deduction", deduction);
-        query.executeUpdate();
-    }
-
-    @Transactional
-    public void updateDutyById(Long id, DutyStatus status) {
-        Query query = entityManager.createQuery(
-                "UPDATE Duty SET status = :status WHERE id = :id");
+                "UPDATE Duty SET status = :status, processAt = :now WHERE id = :id");
         query.setParameter("id", id);
         query.setParameter("status", status);
+        query.setParameter("now", now);
         query.executeUpdate();
     }
 
