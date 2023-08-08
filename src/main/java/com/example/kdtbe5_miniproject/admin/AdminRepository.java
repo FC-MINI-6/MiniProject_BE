@@ -22,10 +22,9 @@ public class AdminRepository {
 
     private final EntityManager entityManager;
 
-    public List<DayOff> findDayOffByStatus(DayOffStatus status) {
+    public List<DayOff> findDayOffByStatus() {
         Query query = entityManager.createQuery(
-                "SELECT d FROM DayOff d INNER JOIN d.user u WHERE d.status = :status", DayOff.class);
-        query.setParameter("status", status);
+                "SELECT d FROM DayOff d INNER JOIN d.user u", DayOff.class);
 
         return query.getResultList();
     }
@@ -48,10 +47,9 @@ public class AdminRepository {
         return (DayOff) query.getSingleResult();
     }
 
-    public List<Duty> findDutyByStatus(DutyStatus status) {
+    public List<Duty> findDutyByStatus() {
         Query query = entityManager.createQuery(
-                "SELECT d FROM Duty d INNER JOIN d.user u WHERE d.status = :status", Duty.class);
-        query.setParameter("status", status);
+                "SELECT d FROM Duty d INNER JOIN d.user u", Duty.class);
 
         return query.getResultList();
     }

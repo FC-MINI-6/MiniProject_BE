@@ -23,15 +23,13 @@ public class AdminService {
     // 승인 대기중인 연차 목록
     @Transactional
     public List<AdminResponse.DayOffStatusDTO> findWaitingDayOff() {
-        DayOffStatus status = DayOffStatus.대기;
-        return adminRepository.findDayOffByStatus(status).stream().map(AdminResponse.DayOffStatusDTO::new).collect(Collectors.toList());
+        return adminRepository.findDayOffByStatus().stream().map(AdminResponse.DayOffStatusDTO::new).collect(Collectors.toList());
     }
 
     // 승인 대기중인 당직 목록
     @Transactional
     public List<AdminResponse.DutyStatusDTO> findWaitingDuty() {
-        DutyStatus status = DutyStatus.대기;
-        return adminRepository.findDutyByStatus(status).stream().map(AdminResponse.DutyStatusDTO::new).collect(Collectors.toList());
+        return adminRepository.findDutyByStatus().stream().map(AdminResponse.DutyStatusDTO::new).collect(Collectors.toList());
     }
 
     // 전체 사용자 세부정보
