@@ -62,19 +62,21 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             log.debug("디버그 : 인증 객체 만들어짐");
         } catch (SignatureVerificationException sve) {
             log.error("토큰 검증 실패");
+            AuthorizationTokenError(response, "토큰 검증 실패");
         } catch (TokenExpiredException tee) {
             log.error("토큰 만료됨");
-            AuthorizationTokenError(response);
-        } catch (JWTDecodeException tee) {
-            log.error("토큰 만료됨");
+            AuthorizationTokenError(response, "토큰 만료됨");
+        } catch (JWTDecodeException jde) {
+            log.error("토큰 디코딩 실패");
+            AuthorizationTokenError(response, "토큰 디코딩 실패");
         }
     }
 
-    private void AuthorizationTokenError(HttpServletResponse response) throws IOException {
+    private void AuthorizationTokenError(HttpServletResponse response, String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         response.setCharacterEncoding("UTF-8");
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(objectMapper.writeValueAsString(ApiUtils.error("다시 로그인 해주세요")));
+        response.getWriter().write(objectMapper.writeValueAsString(ApiUtils.error(errorMessage)));
     }
 }
