@@ -75,10 +75,17 @@ public class SecurityConfig {
         // 11. 인증, 권한 필터 설정
         http.authorizeRequests(
                 authorize -> authorize.antMatchers("/account/**").authenticated()
-                        .antMatchers("/admin/**").access("hasRole('ADMIN')")
+                        .antMatchers("/admin/**").access("hasRole('1')")
                         .anyRequest().permitAll()
         );
         return http.build();
+    }
+
+    protected void configure(HttpSecurity http)throws Exception {
+        http.logout()
+                .logoutSuccessUrl("/") //로그아웃 성공시 리다이렉트주소
+                .invalidateHttpSession(true) //로그아웃 이후 세션 전체 삭제 여부
+                .deleteCookies("JSSIONID");
     }
 
     public CorsConfigurationSource configurationSource() {

@@ -26,4 +26,6 @@ public class Duty {
     private LocalDate date;
     private String reason;
     private DutyStatus status;  //대기(0), 승인(1), 반려(2)
+    private LocalDate applyAt;
+    private LocalDate processAt;
 }

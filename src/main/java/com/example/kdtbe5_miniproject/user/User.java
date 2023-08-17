@@ -32,4 +32,47 @@ public class User extends BaseTimeEntity {
         this.phoneNumber = newPhoneNum;
     }
 
+    public UserResponse.LoginDTO toEntity() {
+        return UserResponse.LoginDTO.builder()
+                .id(this.id)
+                .username(this.username)
+                .email(this.email)
+                .phoneNumber(this.phoneNumber)
+                .position(this.position)
+                .roles(this.roles)
+                .joinDate(this.joinDate)
+                .build();
+    }
+
+    // 직급별 연차 계산
+    public int determineInitialDayOff() {
+        // 입사일로부터 1년이 지났는지 체크
+        LocalDate now = LocalDate.now();
+        LocalDate oneYearAfterJoinDate = this.getJoinDate().plusYears(1);
+        int initialDayOff;
+
+        if (now.isBefore(oneYearAfterJoinDate)) { // 입사 후 1년 미만
+            int monthOfJoin = this.getJoinDate().getMonthValue();
+            initialDayOff = 11 - (monthOfJoin - 1); // 입사 월 기준으로 연차 계산
+        } else { // 입사 후 1년 이상
+            int position = this.getPosition().getTypeNumber();
+            if (position == 0) {
+                initialDayOff = 15;  // 사원
+            } else if (position == 1) {
+                initialDayOff = 17;  // 주임
+            } else if (position == 2) {
+                initialDayOff = 19;  // 대리
+            } else if (position == 3) {
+                initialDayOff = 21;  // 과장
+            } else if (position == 4) {
+                initialDayOff = 23;  // 차장
+            } else if (position == 5) {
+                initialDayOff = 25;  // 부장
+            } else {
+                throw new IllegalArgumentException("직급: " + position);
+            }
+        }
+
+        return initialDayOff;
+    }
 }
