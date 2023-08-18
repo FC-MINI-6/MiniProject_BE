@@ -1,23 +1,24 @@
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=160&section=header&text=Mini%20Project&fontSize=50)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&height=200&section=header&text=MiniProject;%20On_n_Off&fontSize=50)
 <a name="readme-top"></a>
 
 
 
 <!-- PROJECT LOGO -->
-<img src="https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/fd50b2a5-5247-4ca8-9b79-1567cce90e3c" align="right" />
+<div align="center">
+<img src="https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/fd50b2a5-5247-4ca8-9b79-1567cce90e3c">
+</div>
 
 
 
 <!-- PROJECT SHIELDS -->
-# 온앤오프 (On&Off)
+# 온앤오프
 ### 🏆 프로젝트 소개
 프론트(React), 백엔드(SpringBoot/Java) 각팀이 협업하여 ui/ux부터 배포작업까지 완료한 사이드프로젝트입니다.
-프로젝트명은 온앤오프이며, 해당 프로젝트는 클라이언트의 일정관리를 손쉽게 유지관리 할 수 있습니다.
+프로젝트명은 온앤오프(On&Off)이며, 해당 프로젝트는 클라이언트의 일정관리를 손쉽게 유지관리 할 수 있습니다.
 <br>
 >**배포링크 : https://on-n-off-mini.netlify.app/**
 ><br>
 >**개발기간 : 2023.07.24 ~ 2023.08.11**
-
 
 
 
@@ -34,6 +35,7 @@
       </ul>
     </li>
     <li><a href="#프로젝트 구조">프로젝트 구조</a></li>
+    <li><a href="#프로젝트 구조">프로젝트 시현</a></li>
     <li><a href="#팀원 및 역할">팀원 및 역할</a></li>
     <li>
       <a href="#프로젝트 구성">프로젝트 스택</a>
@@ -63,9 +65,52 @@
 
 
 
+<!-- PROJECT IMG -->
+> **로그인 / 회원관리**
+> 
+| 로그인 | 회원관리 |
+| :------------: | :------------: |
+| ![로그인](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/6b54f779-71b3-476e-87fb-518ca6ce88ea)   |   ![회원가입](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/f3664f54-95c5-44cf-8f86-a0bd1d348a8d)   |  
+<br>
+
+> **메인(일반) / 메인(관리자)**
+>
+| 메인(일반) | 메인(관리자) |
+| :------------: | :------------: |
+| ![메인_일반](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/80bc9c83-ba70-43db-a6f7-4fd8f8ac78ed)  |   ![메인_관리자](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/767be3bc-bb80-483f-bcfe-ee46401813a0)   |  
+<br>
+
+> **관리자**
+> 
+| 당직휴가관리 | 사원관리 | 사원관리_세부 정보 |
+| :------------: | :------------: | :------------: |
+| ![관리자_당직휴가관리](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/91635bd8-8922-4a62-8799-72638014a8ae)   |   ![관리자_사원관리](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/61c28bf7-9b06-4d7c-b94d-d5ac4018b740)   |    ![관리자_사원관리_세부 정보](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/091fc659-e093-490b-b9d6-7710b621d8b5) |
+<br>
+
+> **휴가/당직**
+> 
+| 휴가/당직관리 | 휴가등록 | 당직등록 |
+| :------------: | :------------: | :------------: |
+| ![휴가당직관리](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/c0ba7031-a346-4b72-a23d-ff897c0727f5)   |   !![휴가등록](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/272b7b58-b9c1-4e13-a2a3-77d8bcc2893d)   |    ![당직등록](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/fd815383-5247-40ba-8b8e-04e7d4a81f73) |
+
+| 당직신청내역 | 휴가신청내역 |
+| :------------: | :------------: |
+| ![나의당직신청](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/9953028c-a67d-41cc-b0b8-f271eb6173e8)   |   ![나의휴가신청](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/ae5394ef-d7af-493a-8bea-740477326997)   |
+<br>
+
+> **개인정보수정**
+> 
+| 변경_전화번호 | 변경_비밀번호 | 캘린더 |
+| :------------: | :------------: | :------------: |
+| ![내정보변경_전화번호](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/77f38877-a119-4120-955c-01cba08e29e2)   |   ![내정보변경_비밀번호](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/c14ece09-9bcf-404b-853f-e8a1ecbabeab)   |    ![캘린더](https://github.com/FC-MINI-6/MiniProject_BE/assets/78328327/16e67ea1-4ae0-4d8d-a2a7-650729f2c68b) |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+
 <!-- PROJECT PEOPLE -->
 ## ✨ 팀원 및 역할
-| <a href="https://github.com/dali186">김주원</a> | <a href="https://github.com/gosuuk">박성욱</a> | <a href="https://github.com/bornin23">한혜지</a> | <a href="https://github.com/jinakim8">김지나</a> |
+| <a href="https://github.com/dali186" class="size">김주원</a> | <a href="https://github.com/gosuuk" class="size">박성욱</a> | <a href="https://github.com/bornin23" class="size">한혜지</a> | <a href="https://github.com/jinakim8" class="size">김지나</a> |
 | :----------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------: 
 | 초기 개발 세팅<br/> 회원가입<br/> 로그인<br/> 개인정보수정<br/> 관리자<br/> 배포<br/> | 연차 페이지<br/> 당직 페이지<br/> 캘린더<br/> 배포<br/> | 연차 페이지<br/> 당직 페이지<br/> 개인정보수정<br/> 캘린더<br/> | 프로젝트 팀장<br/> 프로젝트세팅<br/> 로그인<br/> 
 
