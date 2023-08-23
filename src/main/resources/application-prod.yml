@@ -1,0 +1,23 @@
+server:
+  servlet:
+    encoding:
+      charset: utf-8
+      force: true
+  port: 5000
+spring:
+  datasource:
+    url: jdbc:mariadb://${rds.hostname}:${rds.port}/${rds.db.name}?allowPublicKeyRetrieval=true&useSSL=false
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: ${rds.username}
+    password: ${rds.password}
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      default_batch_fetch_size: 100
+    open-in-view: false
+
+logging:
+  level:
+    '[MiniProject.Server]': INFO
